@@ -1,0 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+  background-color: aliceblue;
+}
+
+h1 {
+  padding: 20px;
+  width: 100%;
+  background-color: aqua;
+}
