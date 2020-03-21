@@ -88,7 +88,7 @@ h1 {
 #circle {
   position: absolute;
   top: 60%;
-  left: 40%;
+  left: 30%;
   transform: translate(-50%, -50%);
   color: White;
 }
@@ -96,7 +96,7 @@ h1 {
 #walk {
   position: absolute;
   top: 60%;
-  left: 50%;
+  left: 45%;
   transform: translate(-50%, -50%);
   color: White;
 }
@@ -107,4 +107,12 @@ h1 {
   left: 60%;
   transform: translate(-50%, -50%);
   color: White;
+}
+
+#gravity {
+  position: absolute;
+  top: 60%;
+  left: 75%;
+  transform: translate(-50%, -50%);
+  color: white;
 }
