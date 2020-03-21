@@ -70,7 +70,6 @@ var mouse = {
 addEventListener("mousemove", function(event) {
   mouse.x = event.x;
   mouse.y = event.y;
-  console.log(mouse);
 });
 
 window.addEventListener("resize", function() {
