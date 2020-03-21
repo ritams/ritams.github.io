@@ -112,7 +112,7 @@ function animate() {
   }
   c.strokeStyle = "green";
   c.font = "50px Arial";
-//   c.textAlign = "center"
+  c.textAlign = "center";
   c.strokeText("Things will be posted Soon", canvas.width / 2, canvas.height / 2);
 }
 animate();
