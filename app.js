@@ -110,5 +110,8 @@ function animate() {
     }
     circle.update();
   }
+  c.strokeStyle = "green";
+  c.font = "50px Arial";
+  c.strokeText("Things will be posted Soon", 400, 100);
 }
 animate();
