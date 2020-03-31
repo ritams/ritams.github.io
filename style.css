@@ -124,3 +124,10 @@ h1 {
   transform: translate(-50%, -50%);
   color: white;
 }
+#snake {
+  position: absolute;
+  top: 60%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
