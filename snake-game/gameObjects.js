@@ -23,8 +23,8 @@ class Snake {
     pen.fill("grey");
     for (let i = 0; i < this.length; i++) {
       pen.rect(
-        this.body[i].x * this.w,
-        this.body[i].y * this.w,
+        (this.body[i].x + 1) * this.w,
+        (this.body[i].y + 1) * this.w,
         this.w,
         this.w
       );
@@ -57,7 +57,7 @@ class Snake {
       }
     }
     let d = this.pos;
-    if (d.x > cols || d.x < 0 || d.y > rows || d.y < 0) {
+    if (d.x + 1 > cols || d.x < 0 || d.y > rows || d.y < 1) {
       b = true;
     } else {
       b = false;
@@ -66,6 +66,8 @@ class Snake {
   }
 }
 
+let img = new Image();
+img.src = "frog.png";
 class Food {
   constructor(pos, w = 10) {
     this.w = w;
@@ -75,8 +77,15 @@ class Food {
   show(pen) {
     pen.push();
     pen.noStroke();
-    pen.fill("red");
-    pen.rect(this.pos.x * this.w, this.pos.y * this.w, this.w, this.w);
+    pen.fill("rgb(255, 150, 0)");
+    // pen.rect(
+    //   (this.pos.x + 1) * this.w,
+    //   (this.pos.y + 1) * this.w,
+    //   this.w,
+    //   this.w
+    // );
+    let pos = new V2d((this.pos.x + 1) * this.w, (this.pos.y + 1) * this.w);
+    pen.image(img, pos, this.w, this.w);
     pen.pop();
   }
 }

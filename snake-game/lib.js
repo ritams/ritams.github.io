@@ -274,7 +274,7 @@ class Pen {
 
   image(img, pos, width = 10, height = 10) {
     let pos_ = this.getxy(pos.x, pos.y);
-    console.log(pos_);
+    // console.log(pos_);
     this.ctx.drawImage(img, pos_.x, pos_.y, width, height);
   }
 
