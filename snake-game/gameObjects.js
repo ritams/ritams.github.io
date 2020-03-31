@@ -1,3 +1,7 @@
+let frogImg = new Image();
+frogImg.src = "frog.png";
+let snakeImg = new Image();
+snakeImg.src = "snake.svg";
 class Snake {
   constructor(pos, w = 10) {
     this.w = w;
@@ -19,17 +23,53 @@ class Snake {
   }
 
   show(pen) {
-    pen.push();
-    pen.fill("grey");
     for (let i = 0; i < this.length; i++) {
-      pen.rect(
-        (this.body[i].x + 1) * this.w,
-        (this.body[i].y + 1) * this.w,
-        this.w,
-        this.w
-      );
+      //   pen.rect(
+      //     (this.body[i].x + 1) * this.w,
+      //     (this.body[i].y + 1) * this.w,
+      //     this.w,
+      //     this.w
+      //   );
+      //   pen.pop();
+      //   pen.push();
+      //   pen.setStrokeWeight(10);
+      //   pen.line(
+      //     (this.body[i].x + 1) * this.w,
+      //     (this.body[i].y + 1) * this.w,
+      //     (this.body[i].x + 1) * this.w + this.w,
+      //     (this.body[i].y + 1) * this.w
+      //   );
+
+      if (i > 0) {
+        pen.push();
+        pen.fill("green");
+        let d = map(i, 0, this.length, 0, this.w / 2 - 12);
+        pen.circle(
+          (this.body[i].x + 1) * this.w + this.w / 2,
+          (this.body[i].y + 1) * this.w - this.w / 2,
+          this.w / 2 - d
+        );
+        pen.pop();
+      } else {
+        pen.push();
+        let angle;
+        if (this.vel.x == 1) {
+          angle = 90;
+        } else if (this.vel.x == -1) {
+          angle = 270;
+        } else if (this.vel.y == 1) {
+          angle = 180;
+        }
+
+        let pos = new V2d(
+          (this.pos.x + 1) * this.w - 5,
+          (this.pos.y + 1) * this.w + 5
+        );
+        pen.rotate(angle, pos.x + this.w / 2 + 5, pos.y - this.w / 2 - 5);
+        pen.image(snakeImg, pos, this.w + 10, this.w + 10);
+        pen.pop();
+      }
     }
-    pen.pop();
   }
 
   move() {
@@ -66,8 +106,6 @@ class Snake {
   }
 }
 
-let img = new Image();
-img.src = "frog.png";
 class Food {
   constructor(pos, w = 10) {
     this.w = w;
@@ -85,7 +123,7 @@ class Food {
     //   this.w
     // );
     let pos = new V2d((this.pos.x + 1) * this.w, (this.pos.y + 1) * this.w);
-    pen.image(img, pos, this.w, this.w);
+    pen.image(frogImg, pos, this.w, this.w);
     pen.pop();
   }
 }
