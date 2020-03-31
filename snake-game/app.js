@@ -1,10 +1,10 @@
 let canvas = document.querySelector("canvas");
-canvas.width = 1400;
-canvas.height = 800;
+let w = 35;
+canvas.width = Math.floor(window.innerWidth / w) * w;
+canvas.height = Math.floor(window.innerHeight / w) * w;
 let ctx = canvas.getContext("2d");
 let pen = new Pen(ctx);
 
-let w = 40;
 let rows = Math.floor(canvas.height / w) - 2;
 let cols = Math.floor(canvas.width / w) - 2;
 
