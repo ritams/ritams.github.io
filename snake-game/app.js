@@ -45,6 +45,7 @@ function drawGrid() {
   pen.rect(0, canvas.height, canvas.width, w);
   pen.rect(canvas.width - w, canvas.height - w, w, canvas.height);
   pen.pop();
+
   pen.push();
   pen.stroke("rgba(0, 0, 0, 0.1)");
   for (let i = 1; i < cols + 2; i++) {
@@ -95,6 +96,7 @@ window.addEventListener("keydown", function(event) {
 });
 
 let frameCount = 0;
+let angle = 0;
 function animate() {
   window.requestAnimationFrame(animate);
   pen.clear();
@@ -105,15 +107,12 @@ function animate() {
   drawGrid();
   if (frameCount % 10 == 0) {
     frameCount = 0;
-
     // code
     if (!pause) {
       snake.move();
       if (snake.pos.dist(food.pos) <= 0.1) {
         snake.eat();
         food = addFood();
-        snake.show(pen);
-        food.show(pen);
       }
       dead = snake.checkHit();
     }

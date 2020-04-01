@@ -24,31 +24,23 @@ class Snake {
 
   show(pen) {
     for (let i = 0; i < this.length; i++) {
-      //   pen.rect(
-      //     (this.body[i].x + 1) * this.w,
-      //     (this.body[i].y + 1) * this.w,
-      //     this.w,
-      //     this.w
-      //   );
-      //   pen.pop();
-      //   pen.push();
-      //   pen.setStrokeWeight(10);
-      //   pen.line(
-      //     (this.body[i].x + 1) * this.w,
-      //     (this.body[i].y + 1) * this.w,
-      //     (this.body[i].x + 1) * this.w + this.w,
-      //     (this.body[i].y + 1) * this.w
-      //   );
-
       if (i > 0) {
         pen.push();
-        pen.fill("green");
-        let d = map(i, 0, this.length, 0, this.w / 2 - 12);
+        pen.fill("rgba(0, 150, 0, 1 )");
+        let d = map(i, 0, this.length - 1, 0, this.w / 2 - 12);
+
         pen.circle(
           (this.body[i].x + 1) * this.w + this.w / 2,
           (this.body[i].y + 1) * this.w - this.w / 2,
           this.w / 2 - d
         );
+        let pos = new V2d(
+          (this.body[i].x + 1) * this.w + 5,
+          (this.body[i].y + 1) * this.w - 5
+        );
+        pen.ctx.globalAlpha = map(i, 0, this.length, 1, 0);
+        pen.image(frogImg, pos, this.w - 10, this.w - 10);
+
         pen.pop();
       } else {
         pen.push();
@@ -114,14 +106,6 @@ class Food {
 
   show(pen) {
     pen.push();
-    pen.noStroke();
-    pen.fill("rgb(255, 150, 0)");
-    // pen.rect(
-    //   (this.pos.x + 1) * this.w,
-    //   (this.pos.y + 1) * this.w,
-    //   this.w,
-    //   this.w
-    // );
     let pos = new V2d((this.pos.x + 1) * this.w, (this.pos.y + 1) * this.w);
     pen.image(frogImg, pos, this.w, this.w);
     pen.pop();
