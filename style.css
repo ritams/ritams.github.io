@@ -131,3 +131,10 @@ h1 {
   transform: translate(-50%, -50%);
   color: white;
 }
+#game {
+  position: absolute;
+  top: 60%;
+  left: 85%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
