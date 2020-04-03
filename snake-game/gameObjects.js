@@ -27,12 +27,12 @@ class Snake {
       if (i > 0) {
         pen.push();
         pen.fill("rgba(0, 150, 0, 1 )");
-        let d = map(i, 0, this.length - 1, 0, this.w / 2 - 12);
+//         let d = map(i, 0, this.length - 1, 0, this.w / 2 - 12);
 
         pen.circle(
           (this.body[i].x + 1) * this.w + this.w / 2,
           (this.body[i].y + 1) * this.w - this.w / 2,
-          this.w / 2 - d
+          this.w / 2 //- d
         );
         let pos = new V2d(
           (this.body[i].x + 1) * this.w + 5,
