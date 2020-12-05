@@ -10,7 +10,7 @@ class Bird {
     this.maxSpeed = 5;
     this.maxForce = 1;
 
-    this.maxAlignmet = 0.5;
+    this.maxAlignmet = 0.2;
     this.maxCohesion = 0.5;
     this.maxSeparation = 2;
   }
