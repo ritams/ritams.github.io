@@ -12,7 +12,7 @@ class Bird {
 
     this.maxAlignmet = 0.5;
     this.maxCohesion = 0.5;
-    this.maxSeparation = 1;
+    this.maxSeparation = 2;
   }
 
   move() {
