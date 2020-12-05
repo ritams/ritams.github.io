@@ -22,9 +22,9 @@ var pos = new V2d(-500, 200);
 var vel = new V2d(1, 1);
 var acc = new V2d();
 
-console.log((vel.angle() * 180) / Math.PI);
+// console.log((vel.angle() * 180) / Math.PI);
 
-var bird = new Bird(pos, vel, acc, 10);
+var bird = new Bird(pos, vel, acc, 5);
 bird.draw(c);
 function animate() {
   window.requestAnimationFrame(animate);
