@@ -1,26 +1,430 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ritam Pal</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #000;
-            color: #fff;
-            font-family: 'Poppins', sans-serif;
-            font-size: 2rem;
-            font-weight: 100;
-            text-align: center;
-            letter-spacing: 0.1em;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flocking Birds — Sunset (refined)</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #000; }
+    canvas { display: block; width: 100vw; height: 100vh; }
+    .hud { position: fixed; left: 12px; bottom: 12px; color: rgba(255,255,255,.75); font: 12px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial; user-select: none; }
+  </style>
 </head>
 <body>
-    on a break.
+  <canvas id="scene"></canvas>
+  <div class="hud">click to add birds · press H to hide</div>
+<script>
+(() => {
+  const canvas = document.getElementById('scene');
+  const ctx = canvas.getContext('2d');
+  let W = 0, H = 0, DPR = Math.max(1, window.devicePixelRatio || 1);
+
+  // Offscreen background for performance
+  let bgCanvas = document.createElement('canvas');
+  let bgCtx = bgCanvas.getContext('2d');
+
+  // Expose sun position for lighting
+  const SUN = { x: 0, y: 0, r: 0 };
+
+  function resize() {
+    DPR = Math.max(1, window.devicePixelRatio || 1);
+    W = Math.floor(window.innerWidth);
+    H = Math.floor(window.innerHeight);
+    canvas.width = Math.floor(W * DPR);
+    canvas.height = Math.floor(H * DPR);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+    // Background buffer
+    bgCanvas.width = Math.floor(W * DPR);
+    bgCanvas.height = Math.floor(H * DPR);
+    bgCtx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    drawBackground(bgCtx, W, H);
+  }
+  window.addEventListener('resize', resize);
+
+  // --- Utility & Vector helpers ---
+  const rand = (a=1, b=0) => Math.random() * (b - a) + a;
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  function lerp(a, b, t){ return a + (b - a) * t; }
+
+  function vec(x=0, y=0) { return { x, y }; }
+  function add(a,b){ a.x+=b.x; a.y+=b.y; return a; }
+  function sub(a,b){ a.x-=b.x; a.y-=b.y; return a; }
+  function mul(a,s){ a.x*=s; a.y*=s; return a; }
+  function div(a,s){ a.x/=s; a.y/=s; return a; }
+  function mag(a){ return Math.hypot(a.x, a.y); }
+  function setMag(a, m){ const n = mag(a)||1; a.x = a.x/n*m; a.y = a.y/n*m; return a; }
+  function limit(a, m){ const n = mag(a); if(n>m){ a.x*=m/n; a.y*=m/n; } return a; }
+  function heading(a){ return Math.atan2(a.y, a.x); }
+  function fromAngle(ang, m=1){ return { x: Math.cos(ang)*m, y: Math.sin(ang)*m }; }
+  function copy(a){ return { x:a.x, y:a.y }; }
+  function angDiff(a,b){ let d=a-b; while(d>Math.PI) d-=Math.PI*2; while(d<-Math.PI) d+=Math.PI*2; return d; }
+
+  // --- Lightweight self-tests (run once) ---
+  function approx(a,b,eps=1e-6){ return Math.abs(a-b) <= eps; }
+  function runTests(){
+    try {
+      // Existing tests
+      console.assert(lerp(0, 10, 0) === 0, 'lerp t=0');
+      console.assert(lerp(0, 10, 1) === 10, 'lerp t=1');
+      console.assert(approx(lerp(10, 20, 0.5), 15), 'lerp midpoint');
+      console.assert(clamp(5, 0, 3) === 3, 'clamp upper');
+      const v = fromAngle(0, 5); console.assert(approx(mag(v), 5), 'fromAngle magnitude');
+      
+      // Added tests
+      console.assert(lerp(5, 15, 0.25) === 7.5, 'lerp quarter');
+      const hd = angDiff(Math.PI-0.1, -Math.PI+0.1); console.assert(Math.abs(hd) < 0.25, 'angDiff wrap');
+      const th = 1.234; const vh = heading(fromAngle(th, 2)); console.assert(Math.abs(angDiff(vh, th)) < 1e-6, 'heading(fromAngle)');
+      console.debug('[tests] OK');
+    } catch(e){ console.error('[tests] failed', e); }
+  }
+
+  // Seeded random for mountains
+  function mulberry32(seed){ return function(){ let t = seed += 0x6D2B79F5; t = Math.imul(t ^ t>>>15, t | 1); t ^= t + Math.imul(t ^ t>>>7, t | 61); return ((t ^ t>>>14) >>> 0) / 4294967296; }; }
+
+  function drawBackground(c, w, h){
+    // Sky gradient (cinematic sunset)
+    let g = c.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0.0, '#ffd1a3');
+    g.addColorStop(0.25, '#ff9f86');
+    g.addColorStop(0.55, '#db6a8b');
+    g.addColorStop(0.8, '#5a3d7a');
+    g.addColorStop(1.0, '#1b1633');
+    c.fillStyle = g;
+    c.fillRect(0, 0, w, h);
+
+    // Sun near horizon
+    SUN.y = h * 0.72;
+    SUN.x = w * 0.65;
+    SUN.r = Math.min(w, h) * 0.12;
+    const rg = c.createRadialGradient(SUN.x, SUN.y, 0, SUN.x, SUN.y, SUN.r*1.5);
+    rg.addColorStop(0, 'rgba(255,235,190,0.95)');
+    rg.addColorStop(0.45, 'rgba(255,205,140,0.55)');
+    rg.addColorStop(1, 'rgba(255,180,120,0.0)');
+    c.globalCompositeOperation = 'lighter';
+    c.fillStyle = rg; c.beginPath();
+    c.arc(SUN.x, SUN.y, SUN.r*1.5, 0, Math.PI*2);
+    c.fill();
+    c.globalCompositeOperation = 'source-over';
+
+    // Subtle sun reflection band
+    const band = c.createLinearGradient(0, SUN.y, 0, SUN.y+40);
+    band.addColorStop(0, 'rgba(255,200,130,0.12)');
+    band.addColorStop(1, 'rgba(255,200,130,0.0)');
+    c.fillStyle = band; c.fillRect(0, SUN.y-2, w, 50);
+
+    // Mountain layers
+    const layers = [
+      { base: h*0.78, amp: h*0.06, color: '#4b2f64', rough: 0.007 },
+      { base: h*0.86, amp: h*0.08, color: '#2f214a', rough: 0.010 },
+      { base: h*0.93, amp: h*0.10, color: '#1a142e', rough: 0.014 }
+    ];
+    const seedBase = Math.floor(rand(1e9));
+    layers.forEach((L, i) => drawMountainLayer(c, w, h, L.base, L.amp, L.color, L.rough, seedBase + i*12345));
+
+    // Haze
+    const haze = c.createLinearGradient(0, h*0.7, 0, h);
+    haze.addColorStop(0,'rgba(255,200,180,0.05)');
+    haze.addColorStop(1,'rgba(255,220,200,0.15)');
+    c.fillStyle = haze; c.fillRect(0, h*0.7, w, h*0.3);
+  }
+
+  function drawMountainLayer(c, w, h, baseY, amp, color, rough, seed){
+    const R = mulberry32(seed);
+    c.fillStyle = color;
+    c.beginPath();
+    c.moveTo(0, h);
+    c.lineTo(0, baseY + Math.sin(0)*amp);
+    const steps = Math.ceil(w * 0.6);
+    for(let i=0;i<=steps;i++){
+      const x = (i/steps)*w;
+      const t = i*rough;
+      const y = baseY
+        + Math.sin(t*3 + R()*6.28)*amp*0.45
+        + Math.sin(t*1.2 + R()*6.28)*amp*0.35
+        + (R()-0.5)*amp*0.2;
+      c.lineTo(x, y);
+    }
+    c.lineTo(w, h);
+    c.closePath();
+    c.fill();
+  }
+
+  // --- Boid (bird) ---
+  class Boid {
+    constructor(x, y){
+      this.pos = vec(x, y);
+      const ang = rand(Math.PI*2);
+      this.vel = fromAngle(ang, rand(1.0, 2.0));
+      this.acc = vec(0,0);
+      this.maxSpeed = 3.2;
+      this.maxForce = 0.06;
+      this.size = rand(7, 11); // visual scale
+      this.wingLen = this.size * 2.8;
+      this.wingPhase = rand(Math.PI*2);
+      this.baseWingFreq = 0.03;
+      this.wingAmp = 0.9; // radians (reduced at high speed)
+      this.plumageHue = rand(250, 300); // cool violet/indigo range
+      this.plumageVar = rand(-10, 10);
+      // Turning state for nicer roll
+      this.prevHeading = heading(this.vel);
+      this.turnRate = 0;
+    }
+
+    edges(){
+      const m = 40;
+      if(this.pos.x < -m) this.pos.x = W + m;
+      if(this.pos.x > W + m) this.pos.x = -m;
+      if(this.pos.y < -m) this.pos.y = H + m;
+      if(this.pos.y > H + m) this.pos.y = -m;
+    }
+
+    flock(boids){
+      const alignR = 70, cohesionR = 80, sepR = 30;
+      const align = vec(0,0), coh = vec(0,0), sep = vec(0,0);
+      let totalA=0, totalC=0, totalS=0;
+      for(let other of boids){
+        if(other===this) continue;
+        const dx = other.pos.x - this.pos.x;
+        const dy = other.pos.y - this.pos.y;
+        const d2 = dx*dx + dy*dy;
+        if(d2 < alignR*alignR){ add(align, other.vel); totalA++; }
+        if(d2 < cohesionR*cohesionR){ add(coh, other.pos); totalC++; }
+        if(d2 < sepR*sepR){
+          const d = Math.sqrt(d2) || 1e-6;
+          sep.x -= dx / d; sep.y -= dy / d; totalS++;
+        }
+      }
+      if(totalA){ div(align, totalA); setMag(align, this.maxSpeed); sub(align, this.vel); limit(align, this.maxForce); }
+      if(totalC){ div(coh, totalC); sub(coh, this.pos); setMag(coh, this.maxSpeed); sub(coh, this.vel); limit(coh, this.maxForce*0.9); }
+      if(totalS){ setMag(sep, this.maxSpeed); sub(sep, this.vel); limit(sep, this.maxForce*1.6); }
+
+      // weights (slightly smoother, less jitter)
+      mul(align, 0.9); mul(coh, 0.8); mul(sep, 1.55);
+      add(this.acc, align); add(this.acc, coh); add(this.acc, sep);
+    }
+
+    update(){
+      add(this.vel, this.acc);
+      limit(this.vel, this.maxSpeed);
+      add(this.pos, this.vel);
+      this.acc.x = this.acc.y = 0;
+
+      // Wing physics: speed -> flap speed & amplitude taper
+      const speed = mag(this.vel);
+      const flapSpeed = clamp(this.baseWingFreq + (speed/this.maxSpeed)*0.18, 0.02, 0.24);
+      this.wingPhase += flapSpeed;
+      this.currWingAmp = this.wingAmp * (1 - 0.35*(speed/this.maxSpeed)); // faster -> tighter flaps
+
+      // Update heading/turn for roll
+      const newHeading = heading(this.vel);
+      this.turnRate = angDiff(newHeading, this.prevHeading);
+      this.prevHeading = newHeading;
+
+      this.edges();
+    }
+
+    draw(c){
+      const ang = this.prevHeading || 0;
+      const speed = mag(this.vel);
+
+      c.save();
+      c.translate(this.pos.x, this.pos.y);
+      c.rotate(ang);
+
+      // Roll when turning, smoother than using acc
+      const roll = this.turnRate * 0.6;
+
+      // Lighting relative to sun (simple Lambert)
+      const toSun = { x: SUN.x - this.pos.x, y: SUN.y - this.pos.y };
+      const toSunLen = Math.hypot(toSun.x, toSun.y) || 1;
+      const nx = Math.cos(ang), ny = Math.sin(ang);
+      const light = clamp((toSun.x/toSunLen*nx + toSun.y/toSunLen*ny)*0.6 + 0.4, 0, 1);
+
+      // Colors
+      const baseHue = this.plumageHue + this.plumageVar;
+      const dorsal = `hsl(${baseHue}, 28%, ${30 + light*8}%)`;
+      const ventral = `hsl(${baseHue}, 24%, ${22 + light*6}%)`;
+      const edgeHighlight = `hsla(${baseHue}, 40%, ${60 + light*20}%, 0.75)`;
+      const shadow = `hsla(${baseHue}, 30%, 12%, 0.45)`;
+
+      // ---- Wings ----
+      const shoulderX = -this.size*0.2;
+      const shoulderY = 0;
+      const amp = this.currWingAmp;
+      const flapRaw = Math.sin(this.wingPhase);
+      const down = -flapRaw; // invert so downstroke aligns with forward motion visually
+
+      const drawWing = (side) => {
+        const s = side; // -1 left, 1 right
+        const span = this.wingLen;
+        const chord = this.size * 1.25;
+        const sweep = 0.9 + 0.25*down; // more camber on downstroke
+
+        c.save();
+        c.translate(shoulderX, shoulderY);
+        c.rotate(s * (1.05 + amp*down) + roll*s*0.1);
+
+        // Wing shape (curved, with primary/secondary)
+        c.beginPath();
+        c.moveTo(0, 0);
+        c.bezierCurveTo(span*0.35, -s*chord*0.25,
+                        span*0.75, -s*chord*0.15,
+                        span, -s*chord*0.05);
+        c.lineTo(span*0.88, s*chord*0.35*sweep);
+        c.bezierCurveTo(span*0.45, s*chord*0.45*sweep,
+                        span*0.18, s*chord*0.35*sweep,
+                        0, 0);
+        c.closePath();
+
+        // Gradient across wing
+        const wg = c.createLinearGradient(0, 0, span, 0);
+        wg.addColorStop(0, dorsal);
+        wg.addColorStop(1, ventral);
+        c.fillStyle = wg;
+        c.fill();
+
+        // Feather striations
+        c.lineWidth = 1.0;
+        c.strokeStyle = shadow;
+        for(let i=0; i<=6; i++){
+          const t = i/6;
+          c.beginPath();
+          c.moveTo(lerp(0, span*0.9, t), -s*chord*0.04*(1-t));
+          c.lineTo(lerp(0, span*0.78, t), s*chord*0.32*sweep*(1.0 - 0.15*t));
+          c.stroke();
+        }
+
+        // Primary tips accents
+        c.lineWidth = 1.1;
+        c.strokeStyle = edgeHighlight;
+        for(let i=0;i<4;i++){
+          const t = 0.65 + i*0.08;
+          c.beginPath();
+          c.moveTo(span*t, -s*chord*0.06);
+          c.lineTo(span*(t+0.06), s*chord*0.20*sweep);
+          c.stroke();
+        }
+
+        // Leading edge highlight
+        c.lineWidth = 1.6;
+        c.strokeStyle = edgeHighlight;
+        c.beginPath();
+        c.moveTo(0, 0);
+        c.bezierCurveTo(span*0.35, -s*chord*0.25,
+                        span*0.75, -s*chord*0.15,
+                        span, -s*chord*0.05);
+        c.stroke();
+        c.restore();
+      };
+
+      // Left (-1) and Right (+1)
+      drawWing(-1);
+      drawWing(1);
+
+      // ---- Body ----
+      c.save();
+
+      // Body gradient (darker back, lighter belly)
+      const bodyGrad = c.createLinearGradient(-10, -10, 20, 10);
+      bodyGrad.addColorStop(0, ventral);
+      bodyGrad.addColorStop(1, dorsal);
+      c.fillStyle = bodyGrad;
+      c.beginPath();
+      c.ellipse(this.size*0.35, 0, this.size*1.0, this.size*0.58, 0, 0, Math.PI*2);
+      c.fill();
+
+      // Tail (forked like a swift)
+      c.fillStyle = `hsl(${baseHue}, 28%, ${20 + light*6}%)`;
+      c.beginPath();
+      c.moveTo(-this.size*1.0, 0);
+      c.lineTo(-this.size*0.55, this.size*0.42);
+      c.lineTo(-this.size*0.35, 0);
+      c.lineTo(-this.size*0.55, -this.size*0.42);
+      c.closePath();
+      c.fill();
+
+      // Head
+      c.fillStyle = `hsl(${baseHue}, 30%, ${30 + light*8}%)`;
+      c.beginPath();
+      c.arc(this.size*1.12, 0, this.size*0.3, 0, Math.PI*2);
+      c.fill();
+
+      // Beak
+      c.fillStyle = `hsl(${40 + light*10}, 80%, ${55 + light*10}%)`;
+      c.beginPath();
+      c.moveTo(this.size*1.45, 0);
+      c.lineTo(this.size*1.18, this.size*0.12);
+      c.lineTo(this.size*1.18, -this.size*0.12);
+      c.closePath();
+      c.fill();
+
+      // Eye + tiny highlight
+      c.fillStyle = 'rgba(0,0,0,0.85)';
+      c.beginPath();
+      c.arc(this.size*1.05, -this.size*0.05, this.size*0.065, 0, Math.PI*2);
+      c.fill();
+      c.fillStyle = 'rgba(255,255,255,0.7)';
+      c.beginPath();
+      c.arc(this.size*1.02, -this.size*0.07, this.size*0.02, 0, Math.PI*2);
+      c.fill();
+
+      // Subtle back highlight
+      c.strokeStyle = edgeHighlight;
+      c.lineWidth = 1.2;
+      c.beginPath();
+      c.moveTo(0, -this.size*0.35);
+      c.quadraticCurveTo(this.size*0.55, -this.size*0.45, this.size*1.0, -this.size*0.1);
+      c.stroke();
+
+      c.restore();
+      c.restore();
+    }
+  }
+
+  // --- Simulation ---
+  const boids = [];
+  function spawn(n, x=W*0.5, y=H*0.6){
+    for(let i=0;i<n;i++){
+      boids.push(new Boid(x + rand(-20,20), y + rand(-20,20)));
+    }
+  }
+
+  // Init
+  resize();
+  runTests(); // run once on load
+  spawn(60);
+
+  // Interaction
+  let showHUD = true;
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'h' || e.key === 'H'){
+      showHUD = !showHUD;
+      document.querySelector('.hud').style.display = showHUD ? 'block' : 'none';
+    }
+  });
+  canvas.addEventListener('pointerdown', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX - rect.left);
+    const y = (e.clientY - rect.top);
+    spawn(6, x, y);
+  });
+
+  // Main loop
+  function tick(){
+    requestAnimationFrame(tick);
+
+    // draw background buffer
+    ctx.drawImage(bgCanvas, 0, 0, W*DPR, H*DPR, 0, 0, W, H);
+
+    // Update + draw boids
+    for(let i=0;i<boids.length;i++) boids[i].flock(boids);
+    for(let i=0;i<boids.length;i++) { boids[i].update(); boids[i].draw(ctx); }
+  }
+  tick();
+})();
+</script>
 </body>
 </html>
