@@ -1,121 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life is Olive Green</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life is Olive Green</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fdf6ee; /* cream background */
+      padding: 10px;
+    }
+    .text {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(36px, 8vw, 90px); /* scales smoothly */
+      font-weight: 400;
+      white-space: nowrap;
+      display: flex;
+      gap: clamp(15px, 5vw, 40px); /* flexible spacing */
+      text-align: center;
+    }
+    .life { color: #8a9c6d; animation-delay: 0s; }
+    .is { color: #b96f4a; animation-delay: 0.3s; }
+    .olive { color: #6a7040; animation-delay: 0.6s; }
+    .green { color: #5b6430; animation-delay: 0.9s; }
 
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(to bottom, #f0f7f0, #d0e0d0, #a0b0a0); /* Subtle gradient from light green to muted olive tones */
-            overflow: hidden;
-            position: relative;
-        }
+    /* Simple fade-in animation */
+    .text span {
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
 
-        .container {
-            text-align: center;
-            z-index: 2;
-        }
-
-        .text {
-            font-family: 'Caveat', cursive;
-            font-size: 6rem;
-            color: #808000; /* Olive green */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            margin: 0;
-            letter-spacing: 0.05em;
-            transform: rotate(-2deg); /* Slight handwritten tilt for organic feel */
-        }
-
-        /* Subtle leaves as SVG elements, positioned absolutely for a natural, floating design */
-        .leaf {
-            position: absolute;
-            opacity: 0.15; /* Very subtle opacity */
-            fill: #556b2f; /* Dark olive green for leaves */
-            animation: float 20s infinite ease-in-out;
-        }
-
-        .leaf1 {
-            top: 10%;
-            left: 20%;
-            width: 50px;
-            height: 50px;
-            transform: rotate(30deg);
-        }
-
-        .leaf2 {
-            bottom: 15%;
-            right: 25%;
-            width: 40px;
-            height: 40px;
-            transform: rotate(-45deg);
-            animation-delay: 5s;
-        }
-
-        .leaf3 {
-            top: 30%;
-            right: 10%;
-            width: 60px;
-            height: 60px;
-            transform: rotate(15deg);
-            animation-delay: 10s;
-        }
-
-        .leaf4 {
-            bottom: 20%;
-            left: 15%;
-            width: 45px;
-            height: 45px;
-            transform: rotate(60deg);
-            animation-delay: 15s;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(20px) rotate(5deg); }
-            100% { transform: translateY(0) rotate(0deg); }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .text {
-                font-size: 4rem;
-            }
-            .leaf {
-                width: 30px;
-                height: 30px;
-            }
-        }
-    </style>
+    /* Extra fine-tuning for very small screens */
+    @media (max-width: 480px) {
+      .text {
+        flex-wrap: wrap;
+        line-height: 1.2;
+        white-space: normal;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="text">life is olive green</h1>
-    </div>
-
-    <!-- Subtle SVG leaves -->
-    <svg class="leaf leaf1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <path d="M50 0 C20 30 30 70 50 100 C70 70 80 30 50 0 Z" />
-        <line x1="50" y1="0" x2="50" y2="100" stroke="#556b2f" stroke-width="2" />
-    </svg>
-    <svg class="leaf leaf2" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <path d="M50 0 C20 30 30 70 50 100 C70 70 80 30 50 0 Z" />
-        <line x1="50" y1="0" x2="50" y2="100" stroke="#556b2f" stroke-width="2" />
-    </svg>
-    <svg class="leaf leaf3" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <path d="M50 0 C20 30 30 70 50 100 C70 70 80 30 50 0 Z" />
-        <line x1="50" y1="0" x2="50" y2="100" stroke="#556b2f" stroke-width="2" />
-    </svg>
-    <svg class="leaf leaf4" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <path d="M50 0 C20 30 30 70 50 100 C70 70 80 30 50 0 Z" />
-        <line x1="50" y1="0" x2="50" y2="100" stroke="#556b2f" stroke-width="2" />
-    </svg>
+  <div class="text">
+    <span class="life">life</span>
+    <span class="is">is</span>
+    <span class="olive">olive</span>
+    <span class="green">green</span>
+  </div>
 </body>
 </html>
