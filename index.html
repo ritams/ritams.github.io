@@ -1,499 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pomodoro</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link id="favicon" rel="icon" href="">
-  <style>
-    :root{
-      --accent:#673ab7;         /* work */
-      --accent-dark:#512da8;
-      --accent-short:#1e88e5;   /* short */
-      --accent-long:#43a047;    /* long */
-      --warning:#e53935;
-      --glass-light: rgba(255,255,255,.9);
-      --glass-dark: rgba(33,33,33,.9);
-      --text:#212121;
-      --muted:#757575;
-      --bg1:#84fab0; --bg2:#8fd3f4;            /* light gradient */
-      --bg1-dark:#09203f; --bg2-dark:#537895;  /* dark gradient */
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life is Olive Green</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
 
-    *{box-sizing:border-box}
-    body{
-      font-family:'Roboto',sans-serif;
-      display:flex;justify-content:center;align-items:center;
-      min-height:100vh;margin:0;
-      background:linear-gradient(135deg,var(--bg1),var(--bg2));
-      color:var(--text); transition:background .5s,color .5s;
-    }
-    body.dark{ background:linear-gradient(135deg,var(--bg1-dark),var(--bg2-dark)); color:#e0e0e0; }
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, #f0f7f0, #d0e0d0, #a0b0a0); /* Subtle gradient from light green to muted olive tones */
+            overflow: hidden;
+            position: relative;
+        }
 
-    .container{
-      text-align:center; background:var(--glass-light);
-      padding:28px;border-radius:24px; max-width:440px;width:100%;
-      backdrop-filter:blur(10px);
-      box-shadow:0 8px 32px rgba(0,0,0,.12); transition:background .5s,box-shadow .5s;
-    }
-    body.dark .container{ background:var(--glass-dark); box-shadow:0 8px 32px rgba(0,0,0,.35); }
+        .container {
+            text-align: center;
+            z-index: 2;
+        }
 
-    h1{ font-size:1.75rem;margin:0 0 10px; font-weight:600; display:flex;align-items:center;justify-content:center; gap:8px;}
-    h1 i{ font-size:1.3em; color:var(--accent); }
-    body[data-mode="short"] h1 i{ color:var(--accent-short); }
-    body[data-mode="long"] h1 i{ color:var(--accent-long); }
+        .text {
+            font-family: 'Caveat', cursive;
+            font-size: 6rem;
+            color: #808000; /* Olive green */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 0;
+            letter-spacing: 0.05em;
+            transform: rotate(-2deg); /* Slight handwritten tilt for organic feel */
+        }
 
-    #status{ font-size:1.05rem; color:var(--muted); margin-bottom:14px; transition:color .3s; }
-    .timer-wrap{ position:relative; width:240px; height:240px; margin:0 auto 20px; }
-    #timer{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-            font-size:3rem; font-weight:600; color:var(--accent); transition:color .3s; }
-    body[data-mode="short"] #timer{ color:var(--accent-short); }
-    body[data-mode="long"]  #timer{ color:var(--accent-long); }
+        /* Subtle leaves as SVG elements, positioned absolutely for a natural, floating design */
+        .leaf {
+            position: absolute;
+            opacity: 0.15; /* Very subtle opacity */
+            fill: #556b2f; /* Dark olive green for leaves */
+            animation: float 20s infinite ease-in-out;
+        }
 
-    svg circle{ fill:none; stroke-width:8; stroke-linecap:round; transform:rotate(-90deg); transform-origin:center; }
-    .bg{ stroke: #eaeaea; } body.dark .bg{ stroke:#424242; }
-    .progress{ stroke:var(--accent); transition:stroke .3s, stroke-dashoffset .25s ease; }
-    body[data-mode="short"] .progress{ stroke:var(--accent-short); }
-    body[data-mode="long"]  .progress{ stroke:var(--accent-long); }
+        .leaf1 {
+            top: 10%;
+            left: 20%;
+            width: 50px;
+            height: 50px;
+            transform: rotate(30deg);
+        }
 
-    .low{ color:var(--warning)!important; }  /* text low-time */
-    .progress.low{ stroke:var(--warning)!important; }
+        .leaf2 {
+            bottom: 15%;
+            right: 25%;
+            width: 40px;
+            height: 40px;
+            transform: rotate(-45deg);
+            animation-delay: 5s;
+        }
 
-    #cycles{ font-size:.95rem; color:var(--muted); margin:6px 0 16px; }
-    .pills{ display:flex; justify-content:center; gap:6px; margin-bottom:18px; flex-wrap:wrap;}
-    .pill{ width:12px;height:12px;border-radius:999px;background:#dcdcdc; opacity:.8; }
-    .pill.done{ background:var(--accent); } 
-    body[data-mode="short"] .pill.done{ background:var(--accent-short); }
-    body[data-mode="long"]  .pill.done{ background:var(--accent-long); }
+        .leaf3 {
+            top: 30%;
+            right: 10%;
+            width: 60px;
+            height: 60px;
+            transform: rotate(15deg);
+            animation-delay: 10s;
+        }
 
-    .buttons{ display:flex; justify-content:center; gap:14px; margin-bottom:16px; flex-wrap:wrap;}
-    .md-button{
-      position:relative; width:56px;height:56px;border:0;border-radius:50%;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;
-      box-shadow:0 4px 10px rgba(0,0,0,.12); transition:transform .1s,box-shadow .3s, filter .2s;
-      outline: none;
-    }
-    .md-button:hover{ transform:translateY(-2px); box-shadow:0 8px 18px rgba(0,0,0,.18); }
-    .md-button:focus-visible{ outline:3px solid rgba(103,58,183,.4); }
-    .md-button::before{ content:""; position:absolute; inset:0; border-radius:50%; background:rgba(255,255,255,.2); opacity:0; transition:opacity .2s;}
-    .md-button:active::before{ opacity:1; }
-    #start{ background:#43a047; }   /* green */
-    #pause{ background:#fb8c00; }   /* orange */
-    #reset{ background:#e53935; }   /* red   */
-    #skip { background:#3949ab; }   /* indigo */
+        .leaf4 {
+            bottom: 20%;
+            left: 15%;
+            width: 45px;
+            height: 45px;
+            transform: rotate(60deg);
+            animation-delay: 15s;
+        }
 
-    .settings{ display:grid; gap:14px; grid-template-columns:1fr; text-align:left; max-width:360px; margin:10px auto 0; }
-    .row{ display:flex; align-items:center; justify-content:space-between; gap:10px;}
-    .label{ color:var(--muted); font-size:.95rem; }
-    .group{ display:flex; align-items:center; border-bottom:2px solid #bdbdbd; padding:2px 0; }
-    .group:focus-within{ border-color:var(--accent); }
-    input[type="number"], .mini{
-      width:70px; text-align:center; background:transparent; border:0; color:inherit; padding:6px 4px; font-size:1rem;
-    }
-    .inc-dec{ background:transparent;border:0;color:var(--accent);font-size:1.2rem;cursor:pointer;padding:6px; }
-    body[data-mode="short"] .inc-dec{ color:var(--accent-short); }
-    body[data-mode="long"]  .inc-dec{ color:var(--accent-long); }
-    .switch{ position:relative; width:54px;height:32px; }
-    .switch input{ opacity:0;width:0;height:0; }
-    .slider{ position:absolute; inset:0;border-radius:999px;background:#c7c7c7; transition:.3s; }
-    .slider::before{ content:""; position:absolute; width:24px;height:24px; left:4px; top:4px; border-radius:50%; background:#fff; transition:.3s; }
-    .switch input:checked + .slider{ background:#2196F3; }
-    .switch input:checked + .slider::before{ transform:translateX(22px); }
-    .hint{ font-size:.85rem; color:var(--muted); margin-top:6px; text-align:center; }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(20px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
 
-    @keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.02)} 100%{transform:scale(1)} }
-    #timer.running{ animation:pulse 1s infinite; }
-  </style>
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .text {
+                font-size: 4rem;
+            }
+            .leaf {
+                width: 30px;
+                height: 30px;
+            }
+        }
+    </style>
 </head>
-<body data-mode="work">
-  <div class="container" aria-live="polite">
-    <h1><i class="material-icons">timer</i>Pomodoro</h1>
-    <div id="status">Work Session</div>
-
-    <div class="timer-wrap" role="timer" aria-atomic="true">
-      <svg width="240" height="240" aria-hidden="true">
-        <circle class="bg" cx="120" cy="120" r="108"></circle>
-        <circle class="progress" id="ring" cx="120" cy="120" r="108" stroke-dasharray="678.58" stroke-dashoffset="678.58"></circle>
-      </svg>
-      <div id="timer" aria-live="assertive">25:00</div>
+<body>
+    <div class="container">
+        <h1 class="text">life is olive green</h1>
     </div>
 
-    <div id="cycles">Pomodoros completed: <strong id="pomo-count">0</strong></div>
-    <div class="pills" id="pills" aria-label="Cycle progress"></div>
-
-    <div class="buttons">
-      <button class="md-button" id="start" title="Start (Space)"><i class="material-icons">play_arrow</i></button>
-      <button class="md-button" id="pause" title="Pause (Space)"><i class="material-icons">pause</i></button>
-      <button class="md-button" id="skip"  title="Skip (S)"><i class="material-icons">skip_next</i></button>
-      <button class="md-button" id="reset" title="Reset (R)"><i class="material-icons">replay</i></button>
-    </div>
-
-    <div class="settings">
-      <div class="row">
-        <span class="label">Work (min)</span>
-        <div class="group">
-          <button class="inc-dec" data-inc="work">−</button>
-          <input type="number" id="work" value="25" min="1"/>
-          <button class="inc-dec" data-inc="work" data-dir="1">+</button>
-        </div>
-      </div>
-
-      <div class="row">
-        <span class="label">Short Break (min)</span>
-        <div class="group">
-          <button class="inc-dec" data-inc="short">−</button>
-          <input type="number" id="short" value="5" min="1"/>
-          <button class="inc-dec" data-inc="short" data-dir="1">+</button>
-        </div>
-      </div>
-
-      <div class="row">
-        <span class="label">Long Break (min)</span>
-        <div class="group">
-          <button class="inc-dec" data-inc="long">−</button>
-          <input type="number" id="long" value="15" min="1"/>
-          <button class="inc-dec" data-inc="long" data-dir="1">+</button>
-        </div>
-      </div>
-
-      <div class="row">
-        <span class="label">Long break every</span>
-        <div class="group">
-          <button class="inc-dec" data-inc="cadence">−</button>
-          <input type="number" id="cadence" class="mini" value="4" min="2" />
-          <button class="inc-dec" data-inc="cadence" data-dir="1">+</button>
-        </div>
-        <span class="label">pomodoros</span>
-      </div>
-
-      <div class="row">
-        <span class="label">Auto-start next</span>
-        <label class="switch" title="Auto-start next interval">
-          <input type="checkbox" id="autostart">
-          <span class="slider"></span>
-        </label>
-      </div>
-
-      <div class="row">
-        <span class="label">Dark Mode (T)</span>
-        <label class="switch">
-          <input type="checkbox" id="theme">
-          <span class="slider"></span>
-        </label>
-      </div>
-
-      <div class="row">
-        <span class="label">Sound</span>
-        <label class="switch" title="Toggle sound">
-          <input type="checkbox" id="sound">
-          <span class="slider"></span>
-        </label>
-        <input type="range" id="volume" min="0" max="1" step="0.01" value="0.6" style="width:120px">
-      </div>
-
-      <div class="row">
-        <span class="label">Desktop notifications</span>
-        <label class="switch" title="Enable notifications">
-          <input type="checkbox" id="notify">
-          <span class="slider"></span>
-        </label>
-      </div>
-    </div>
-
-    <div class="hint">Shortcuts: <b>Space</b> start/pause • <b>R</b> reset • <b>S</b> skip • <b>T</b> theme</div>
-  </div>
-
-  <script>
-  (()=> {
-    // ------- State -------
-    const els = {
-      title: document.title,
-      ring: document.getElementById('ring'),
-      timer: document.getElementById('timer'),
-      status: document.getElementById('status'),
-      count: document.getElementById('pomo-count'),
-      pills: document.getElementById('pills'),
-      start: document.getElementById('start'),
-      pause: document.getElementById('pause'),
-      reset: document.getElementById('reset'),
-      skip:  document.getElementById('skip'),
-      work:  document.getElementById('work'),
-      short: document.getElementById('short'),
-      long:  document.getElementById('long'),
-      cadence: document.getElementById('cadence'),
-      autostart: document.getElementById('autostart'),
-      theme: document.getElementById('theme'),
-      sound: document.getElementById('sound'),
-      volume: document.getElementById('volume'),
-      notify: document.getElementById('notify'),
-      favicon: document.getElementById('favicon')
-    };
-
-    const R = 108;
-    const CIRC = 2 * Math.PI * R;
-
-    let workTime = 25*60, shortBreak = 5*60, longBreak = 15*60;
-    let cadence = 4; // long break every N pomodoros
-    let timeLeft = workTime;
-    let mode = 'work'; // 'work'|'short'|'long'
-    let running = false;
-    let pomos = 0, intervalId = null;
-    let autoStart = false;
-    let audioCtx = null, gain = null;
-    let soundOn = true;
-
-    // ------- Persistence -------
-    const load = (k, d)=> {
-      try { const v = localStorage.getItem(k); return v===null?d:JSON.parse(v); }
-      catch { return d; }
-    };
-    const save = (k, v)=> localStorage.setItem(k, JSON.stringify(v));
-
-    // Initial load
-    workTime   = load('pm_work', workTime);
-    shortBreak = load('pm_short', shortBreak);
-    longBreak  = load('pm_long', longBreak);
-    cadence    = load('pm_cadence', cadence);
-    pomos      = load('pm_pomos', 0);
-    autoStart  = load('pm_autostart', false);
-    soundOn    = load('pm_sound', true);
-    const vol  = load('pm_volume', 0.6);
-    const dark = load('pm_theme', (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches));
-
-    // Apply loaded values to UI
-    els.work.value = Math.round(workTime/60);
-    els.short.value = Math.round(shortBreak/60);
-    els.long.value = Math.round(longBreak/60);
-    els.cadence.value = cadence;
-    els.autostart.checked = autoStart;
-    els.sound.checked = soundOn;
-    els.volume.value = vol;
-    if(dark){ document.body.classList.add('dark'); els.theme.checked = true; }
-
-    // Favicon canvas
-    const iconCanvas = document.createElement('canvas'); iconCanvas.width = 64; iconCanvas.height = 64;
-    const ictx = iconCanvas.getContext('2d');
-
-    // ------- Helpers -------
-    function fmt(t){ const m = Math.floor(t/60).toString().padStart(2,'0'); const s = (t%60).toString().padStart(2,'0'); return `${m}:${s}`; }
-    function setMode(m){
-      mode = m;
-      document.body.setAttribute('data-mode', m);
-      els.status.textContent = m==='work' ? 'Work Session' : (m==='short' ? 'Short Break' : 'Long Break');
-      updateAccent();
-    }
-    function updateAccent(){ // adjust document title color via data-mode
-      // handled in CSS via [data-mode]
-    }
-    function totalForMode(m=mode){ return m==='work' ? workTime : (m==='short' ? shortBreak : longBreak); }
-
-    function updateTimerUI(){
-      els.timer.textContent = fmt(timeLeft);
-      const total = totalForMode();
-      const ratio = Math.max(0, Math.min(1, timeLeft/total));
-      els.ring.style.strokeDasharray = CIRC.toFixed(2);
-      els.ring.style.strokeDashoffset = (CIRC * ratio).toFixed(2);
-      const low = ratio <= 0.1 && mode==='work';
-      els.timer.classList.toggle('low', low);
-      els.ring.classList.toggle('low', low);
-      document.title = `${fmt(timeLeft)} — ${mode==='work'?'Work':'Break'}`;
-      drawFavicon(ratio);
-    }
-
-    function drawFavicon(ratio){
-      const color = getComputedStyle(document.body).getPropertyValue('--accent') || '#673ab7';
-      ictx.clearRect(0,0,64,64);
-      ictx.beginPath(); ictx.arc(32,32,28,0,Math.PI*2); ictx.strokeStyle = 'rgba(0,0,0,0.12)'; ictx.lineWidth = 6; ictx.stroke();
-      ictx.beginPath(); ictx.arc(32,32,28,-Math.PI/2, -Math.PI/2 + Math.PI*2*ratio, false);
-      // pick accent by mode
-      const style = getComputedStyle(document.body);
-      const stroke = mode==='work' ? style.getPropertyValue('--accent') :
-                     mode==='short'? style.getPropertyValue('--accent-short') :
-                                     style.getPropertyValue('--accent-long');
-      ictx.strokeStyle = stroke.trim() || color.trim(); ictx.lineWidth = 6; ictx.stroke();
-      ictx.font = 'bold 20px Roboto, Arial'; ictx.fillStyle = '#111'; if(document.body.classList.contains('dark')) ictx.fillStyle='#e0e0e0';
-      const m = String(Math.floor(timeLeft/60)).padStart(2,'0');
-      ictx.textAlign = 'center'; ictx.textBaseline='middle';
-      ictx.fillText(m, 32, 34);
-      els.favicon.href = iconCanvas.toDataURL('image/png');
-    }
-
-    function renderPills(){
-      els.pills.innerHTML = '';
-      for(let i=0;i<cadence;i++){
-        const dot = document.createElement('div');
-        dot.className = 'pill' + (i < (pomos % cadence) ? ' done' : '');
-        els.pills.appendChild(dot);
-      }
-    }
-
-    function ensureAudio(){
-      if(!audioCtx){
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        gain = audioCtx.createGain(); gain.gain.value = parseFloat(els.volume.value);
-        gain.connect(audioCtx.destination);
-      }
-      if(audioCtx.state === 'suspended'){ audioCtx.resume(); }
-    }
-
-    function beep(pattern=[440,660,880], dur=150){
-      if(!soundOn) return;
-      ensureAudio();
-      let t = audioCtx.currentTime;
-      pattern.forEach((freq,i)=>{
-        const osc = audioCtx.createOscillator();
-        osc.type='sine'; osc.frequency.setValueAtTime(freq, t + i*(dur/1000 + .05));
-        osc.connect(gain);
-        osc.start(t + i*(dur/1000 + .05));
-        osc.stop(t + i*(dur/1000 + .05) + dur/1000);
-      });
-      if(navigator.vibrate) navigator.vibrate([60,40,60]); // soft haptic
-    }
-
-    function notify(title, body){
-      if(!els.notify.checked) return;
-      if(Notification.permission === 'granted'){
-        new Notification(title, { body });
-      }
-    }
-
-    function start(){
-      if(running) return;
-      running = true; els.timer.classList.add('running');
-      clearInterval(intervalId);
-      intervalId = setInterval(tick, 1000);
-    }
-
-    function pause(){
-      if(!running) return;
-      running = false; els.timer.classList.remove('running');
-      clearInterval(intervalId);
-    }
-
-    function reset(){
-      pause();
-      setMode('work');
-      timeLeft = workTime;
-      updateTimerUI();
-      els.status.textContent = 'Work Session';
-    }
-
-    function skip(){
-      pause();
-      nextInterval(); // will set mode & time
-      updateTimerUI();
-      if(autoStart) start();
-    }
-
-    function tick(){
-      if(timeLeft > 0){
-        timeLeft--;
-        updateTimerUI();
-      } else {
-        // End of interval
-        pause();
-        if(mode==='work'){
-          pomos++; save('pm_pomos', pomos); els.count.textContent = pomos;
-          renderPills();
-        }
-        beep(mode==='work' ? [520,660,780] : [420,360,300], 140);
-        notify('Time’s up', `Starting ${mode==='work' ? ( (pomos%cadence===0)?'Long Break':'Short Break' ) : 'Work Session' }`);
-        nextInterval();
-        updateTimerUI();
-        if(autoStart) start();
-        else alert(`Time's up! Starting ${els.status.textContent}.`);
-      }
-    }
-
-    function nextInterval(){
-      if(mode==='work'){
-        if(pomos % cadence === 0){
-          setMode('long'); timeLeft = longBreak;
-        } else {
-          setMode('short'); timeLeft = shortBreak;
-        }
-      } else {
-        setMode('work'); timeLeft = workTime;
-      }
-    }
-
-    // ------- Wiring -------
-    // Buttons
-    els.start.addEventListener('click', start);
-    els.pause.addEventListener('click', pause);
-    els.reset.addEventListener('click', reset);
-    els.skip .addEventListener('click', skip);
-
-    // Settings increment/decrement
-    document.querySelectorAll('.inc-dec').forEach(btn=>{
-      btn.addEventListener('click', e=>{
-        const key = e.currentTarget.getAttribute('data-inc');
-        const dir = e.currentTarget.getAttribute('data-dir') === '1' ? 1 : -1;
-        const input = key==='work'?els.work : key==='short'?els.short : key==='long'?els.long : els.cadence;
-        const min = key==='cadence'?2:1;
-        let val = parseInt(input.value||'0',10) + dir;
-        if(val<min) val=min;
-        input.value = val;
-        applySettings();
-      });
-    });
-
-    // Inputs change
-    [els.work, els.short, els.long, els.cadence].forEach(inp => inp.addEventListener('change', applySettings));
-    function applySettings(){
-      workTime = Math.max(60, parseInt(els.work.value||'25',10)*60);
-      shortBreak = Math.max(60, parseInt(els.short.value||'5',10)*60);
-      longBreak  = Math.max(60, parseInt(els.long.value ||'15',10)*60);
-      cadence = Math.max(2, parseInt(els.cadence.value||'4',10));
-      save('pm_work', workTime);
-      save('pm_short', shortBreak);
-      save('pm_long', longBreak);
-      save('pm_cadence', cadence);
-      // keep current mode, but rescale/replace remaining time to the new total
-      timeLeft = totalForMode();
-      renderPills();
-      updateTimerUI();
-    }
-
-    // Theme
-    els.theme.addEventListener('change', ()=>{
-      document.body.classList.toggle('dark', els.theme.checked);
-      save('pm_theme', els.theme.checked);
-      updateTimerUI();
-    });
-
-    // Auto-start, sound, volume
-    els.autostart.addEventListener('change', ()=>{ autoStart = els.autostart.checked; save('pm_autostart', autoStart); });
-    els.sound.addEventListener('change', ()=>{ soundOn = els.sound.checked; save('pm_sound', soundOn); });
-    els.volume.addEventListener('input', ()=>{ if(gain) gain.gain.value = parseFloat(els.volume.value); save('pm_volume', parseFloat(els.volume.value)); });
-
-    // Notifications toggle (request permission on enable)
-    els.notify.addEventListener('change', async ()=>{
-      if(els.notify.checked && 'Notification' in window){
-        if(Notification.permission === 'default'){
-          try{ await Notification.requestPermission(); }catch{}
-        }
-      }
-    });
-
-    // Keyboard shortcuts
-    window.addEventListener('keydown', (e)=>{
-      if(e.target && (e.target.tagName==='INPUT' || e.target.tagName==='TEXTAREA')) return;
-      if(e.code === 'Space'){ e.preventDefault(); running ? pause() : start(); }
-      if(e.key.toLowerCase()==='r'){ e.preventDefault(); reset(); }
-      if(e.key.toLowerCase()==='s'){ e.preventDefault(); skip(); }
-      if(e.key.toLowerCase()==='t'){ e.preventDefault(); els.theme.checked=!els.theme.checked; els.theme.dispatchEvent(new Event('change')); }
-    });
-
-    // Init
-    setMode('work');
-    timeLeft = workTime;
-    els.count.textContent = pomos;
-    renderPills();
-    updateTimerUI();
-  })();
-  </script>
+    <!-- Subtle SVG leaves -->
+    <svg class="leaf leaf1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 0 C20 30 30 70 50 100 C70 70 80 30 50 0 Z" />
+        <line x1="50" y1="0" x2="50" y2="100" stroke="#556b2f" stroke-width="2" />
+    </svg>
+    <svg class="leaf leaf2" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 0 C20 30 30 70 50 100 C70 70 80 30 50 0 Z" />
+        <line x1="50" y1="0" x2="50" y2="100" stroke="#556b2f" stroke-width="2" />
+    </svg>
+    <svg class="leaf leaf3" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 0 C20 30 30 70 50 100 C70 70 80 30 50 0 Z" />
+        <line x1="50" y1="0" x2="50" y2="100" stroke="#556b2f" stroke-width="2" />
+    </svg>
+    <svg class="leaf leaf4" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 0 C20 30 30 70 50 100 C70 70 80 30 50 0 Z" />
+        <line x1="50" y1="0" x2="50" y2="100" stroke="#556b2f" stroke-width="2" />
+    </svg>
 </body>
 </html>
