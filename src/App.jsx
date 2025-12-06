@@ -276,10 +276,8 @@ const Hero = ({ isDark }) => {
 
                         {/* Image Placeholder */}
                         <div className="absolute inset-6 rounded-full overflow-hidden shadow-2xl border-4 border-[#606c38] group">
-                            {/* NOTE TO USER: REPLACE THIS SRC WITH THE ACTUAL IMAGE OF RITAM PAL */}
-                            {/* Example: src="/assets/ritam.jpg" */}
                             <img
-                                src="https://ui-avatars.com/api/?name=Ritam+Pal&background=606c38&color=fff&size=512&font-size=0.33"
+                                src="/ritam.jpg"
                                 alt="Ritam Pal"
                                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                             />
