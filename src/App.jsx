@@ -590,7 +590,7 @@ const Footer = ({ isDark }) => {
                 : 'bg-[radial-gradient(circle_at_50%_100%,rgba(96,108,56,0.1),transparent_50%)]'
                 }`}></div>
 
-            <div className="max-w-3xl mx-auto relative z-10 flex flex-col items-center text-center">
+            <div className="max-w-3xl mx-auto relative z-10 flex flex-col items-start text-left md:items-center md:text-center">
 
                 {/* Title */}
                 <h2 className={`text-6xl md:text-7xl font-serif font-bold mb-8 ${isDark ? 'text-[#f4f5f0]' : 'text-[#283618]'}`}>
@@ -605,14 +605,14 @@ const Footer = ({ isDark }) => {
                 </p>
 
                 {/* Email Section */}
-                <div className="w-full flex flex-col items-center gap-4 mb-20">
+                <div className="w-full flex flex-col items-start md:items-center gap-4 mb-20">
                     <span className="text-xs font-bold tracking-[0.2em] uppercase text-[#606c38]">Email</span>
 
-                    <div className={`flex items-center gap-3 px-6 py-4 rounded-2xl border transition-all ${isDark
+                    <div className={`flex items-center justify-between w-full md:w-auto gap-2 md:gap-3 px-4 md:px-6 py-4 rounded-2xl border transition-all ${isDark
                         ? 'bg-[#1a1a1a] border-[#333]'
                         : 'bg-white border-[#e2e8f0]'
                         }`}>
-                        <span className={`text-lg md:text-xl font-medium ${isDark ? 'text-gray-200' : 'text-[#283618]'}`}>
+                        <span className={`text-xs sm:text-sm md:text-xl font-medium truncate ${isDark ? 'text-gray-200' : 'text-[#283618]'}`}>
                             {email}
                         </span>
 
@@ -630,10 +630,10 @@ const Footer = ({ isDark }) => {
                 </div>
 
                 {/* Socials Section */}
-                <div className="flex flex-col items-center gap-6">
+                <div className="flex flex-col items-start md:items-center gap-6">
                     <span className="text-xs font-bold tracking-[0.2em] uppercase text-[#606c38]">Socials</span>
 
-                    <div className="flex flex-wrap justify-center gap-4">
+                    <div className="flex flex-wrap justify-start md:justify-center gap-4">
                         {socialLinks.map((link, idx) => (
                             <a
                                 key={idx}
@@ -650,7 +650,7 @@ const Footer = ({ isDark }) => {
                     </div>
                 </div>
 
-                <div className={`mt-20 pt-8 border-t w-full text-center text-sm ${isDark ? 'border-[#333] text-gray-500' : 'border-[#606c38]/10 text-gray-500'}`}>
+                <div className={`mt-20 pt-8 border-t w-full text-left md:text-center text-sm ${isDark ? 'border-[#333] text-gray-500' : 'border-[#606c38]/10 text-gray-500'}`}>
                     <p className="mb-2">&copy; {new Date().getFullYear()} Ritam Pal. All rights reserved.</p>
                     <p>Designed with <span className={`font-serif italic ${isDark ? 'text-[#a3b18a]' : 'text-[#606c38]'}`}>Universal Laws</span>.</p>
                 </div>
