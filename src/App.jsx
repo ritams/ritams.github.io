@@ -18,7 +18,8 @@ const DATA = {
         { label: "Countries Analyzed", value: "34+" },
         { label: "Key Publications", value: "PRL, PRE" },
         { label: "Fellowship", value: "PMRF Cycle 5" },
-        { label: "Research Focus", value: "Sociophysics" }
+        { label: "Research Focus", value: "Sociophysics" },
+        { label: "Institution", value: "IISER Pune" }
     ],
     research: [
         {
@@ -32,7 +33,7 @@ const DATA = {
             id: 2,
             title: "Universality in Elections",
             icon: <BarChart3 className="w-6 h-6" />,
-            desc: "Our analysis of 34 nations reveals that voter turnout acts as a 'control parameter'—like temperature in thermodynamics—dictating the statistical distribution of victory margins.",
+            desc: "Our analysis of 34 nations reveals that voter turnout and margins are inherently correlated. Crucially, we show that a scaled ratio of margin and turnout exhibits a robust universal distribution across diverse democratic systems.",
             impact: "Published in Physical Review Letters (2025)."
         },
         {
@@ -186,9 +187,12 @@ const NavBar = ({ isDark, toggleTheme }) => {
     }, [isMenuOpen]);
 
     return (
-        <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled
-            ? (isDark ? 'bg-[#1a1a1a]/90 backdrop-blur-md border-b border-[#606c38]/20' : 'bg-white/90 backdrop-blur-md border-b border-[#606c38]/10')
-            : (isDark ? 'bg-[#1a1a1a]/70 backdrop-blur-sm' : 'bg-white/70 backdrop-blur-sm')
+
+        <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isMenuOpen
+            ? (isDark ? 'bg-[#1a1a1a]' : 'bg-[#f4f5f0]') // Solid background when menu is open
+            : scrolled
+                ? (isDark ? 'bg-[#1a1a1a]/90 backdrop-blur-md border-b border-[#606c38]/20' : 'bg-white/90 backdrop-blur-md border-b border-[#606c38]/10')
+                : (isDark ? 'bg-[#1a1a1a]/70 backdrop-blur-sm' : 'bg-white/70 backdrop-blur-sm')
             }`}>
             <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                 {/* Updated Title: Thin, Spaced Out */}
@@ -227,20 +231,23 @@ const NavBar = ({ isDark, toggleTheme }) => {
             <AnimatePresence>
                 {isMenuOpen && (
                     <motion.div
-                        initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-                        animate={{ opacity: 1, backdropFilter: "blur(12px)" }}
-                        exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-                        transition={{ duration: 0.3 }}
-                        className={`fixed inset-0 z-40 flex flex-col items-center justify-center ${isDark ? 'bg-[#1a1a1a]/95' : 'bg-[#f4f5f0]/95'
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.2 }}
+                        className={`fixed inset-0 z-40 flex flex-col items-center justify-center ${isDark ? 'bg-[#1a1a1a]' : 'bg-[#f4f5f0]'
                             }`}
                     >
-                        <div className="flex flex-col items-center gap-10 text-3xl font-serif">
+                        {/* Decorative background element for menu */}
+                        <div className={`absolute top-0 right-0 w-[300px] h-[300px] rounded-full blur-3xl opacity-20 pointer-events-none ${isDark ? 'bg-[#606c38]/30' : 'bg-[#606c38]/20'}`} />
+
+                        <div className="flex flex-col items-center gap-12">
                             {['About', 'Research', 'Publications', 'Contact'].map((item) => (
                                 <a
                                     key={item}
                                     href={`#${item.toLowerCase()}`}
                                     onClick={() => setIsMenuOpen(false)}
-                                    className={`${isDark ? 'text-white hover:text-[#a3b18a]' : 'text-[#283618] hover:text-[#606c38]'} transition-colors tracking-wide`}
+                                    className={`text-4xl font-serif font-bold tracking-wide transition-colors ${isDark ? 'text-white hover:text-[#a3b18a]' : 'text-[#283618] hover:text-[#606c38]'}`}
                                 >
                                     {item}
                                 </a>
@@ -357,99 +364,43 @@ const About = ({ isDark }) => {
             {/* Subtle background element */}
             <div className={`absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-3xl opacity-20 pointer-events-none ${isDark ? 'bg-[#606c38]/20' : 'bg-[#606c38]/10'}`} />
 
-            <div className="max-w-6xl mx-auto relative z-10">
-                <div className="grid lg:grid-cols-12 gap-16 items-start">
-                    {/* Left Column: Narrative (7 cols) */}
-                    <div className="lg:col-span-7 space-y-12">
-                        <div>
-                            <h2 className={`text-xs font-bold tracking-[0.2em] uppercase mb-6 flex items-center gap-3 ${isDark ? 'text-[#a3b18a]' : 'text-[#606c38]'}`}>
-                                <span className="w-8 h-[1px] bg-current"></span>
-                                About The Researcher
-                            </h2>
-                            <h3 className={`text-4xl md:text-5xl font-serif font-bold leading-tight mb-8 ${isDark ? 'text-white' : 'text-[#283618]'}`}>
-                                From Statistical Physics to <br />
-                                <span className={`italic relative inline-block px-2 ${isDark ? 'text-[#e9edc9]' : 'text-[#606c38]'}`}>
-                                    Social Reality
-                                    <span className={`absolute bottom-2 left-0 w-full h-3 -z-10 opacity-30 ${isDark ? 'bg-[#606c38]' : 'bg-[#e9edc9]'}`}></span>
-                                </span>
-                            </h3>
-                            <div className={`space-y-6 text-lg leading-relaxed font-light ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                                <p className="first-letter:text-5xl first-letter:font-serif first-letter:mr-3 first-letter:float-left first-letter:leading-none">
-                                    {DATA.about}
-                                </p>
-                                <p>
-                                    Working with Prof. M. S. Santhanam's lab, my doctoral research focuses on establishing that social systems—despite their apparent complexity—often collapse onto simple, universal manifolds. This approach allows us to identify anomalies like electoral malpractice not as political opinions, but as mathematical deviations.
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Stats Grid - Cleaner Look */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-8 border-t border-dashed border-[#606c38]/30">
-                            {DATA.stats.map((stat, idx) => (
-                                <div key={idx} className="space-y-1">
-                                    <div className={`text-xl md:text-3xl font-serif font-bold ${isDark ? 'text-white' : 'text-[#283618]'}`}>
-                                        {stat.value}
-                                    </div>
-                                    <div className={`text-xs font-medium uppercase tracking-wider ${isDark ? 'text-[#a3b18a]' : 'text-[#606c38]'}`}>
-                                        {stat.label}
-                                    </div>
-                                </div>
-                            ))}
+            <div className="max-w-5xl mx-auto relative z-10">
+                <div className="space-y-12">
+                    {/* Main Narrative - Full Width/Centered */}
+                    <div>
+                        <h2 className={`text-xs font-bold tracking-[0.2em] uppercase mb-6 flex items-center gap-3 ${isDark ? 'text-[#a3b18a]' : 'text-[#606c38]'}`}>
+                            <span className="w-8 h-[1px] bg-current"></span>
+                            About The Researcher
+                        </h2>
+                        <h3 className={`text-4xl md:text-6xl font-serif font-bold leading-tight mb-8 max-w-4xl ${isDark ? 'text-white' : 'text-[#283618]'}`}>
+                            From Statistical Physics to <br />
+                            <span className={`italic relative inline-block px-2 ${isDark ? 'text-[#e9edc9]' : 'text-[#606c38]'}`}>
+                                Social Reality
+                                <span className={`absolute bottom-2 left-0 w-full h-3 -z-10 opacity-30 ${isDark ? 'bg-[#606c38]' : 'bg-[#e9edc9]'}`}></span>
+                            </span>
+                        </h3>
+                        <div className={`space-y-8 text-lg md:text-xl leading-relaxed font-light max-w-3xl ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                            <p className="first-letter:text-6xl first-letter:font-serif first-letter:mr-4 first-letter:float-left first-letter:leading-none">
+                                {DATA.about}
+                            </p>
+                            <p>
+                                Working with Prof. M. S. Santhanam's lab, my doctoral research focuses on establishing that social systems—despite their apparent complexity—often collapse onto simple, universal manifolds. This approach allows us to identify anomalies like electoral malpractice not as political opinions, but as mathematical deviations.
+                            </p>
                         </div>
                     </div>
 
-                    {/* Right Column: Institutional Card (5 cols) */}
-                    <div className="lg:col-span-5 lg:pt-12">
-                        <div className={`relative p-6 md:p-10 rounded-3xl backdrop-blur-md border shadow-xl transition-all hover:shadow-2xl ${isDark
-                            ? 'bg-[#283618]/20 border-[#606c38]/30 shadow-black/20'
-                            : 'bg-white/60 border-[#606c38]/10 shadow-[#606c38]/5'
-                            }`}>
-                            {/* Decorative corner */}
-                            <div className={`absolute top-6 right-6 w-12 h-12 opacity-20 ${isDark ? 'text-white' : 'text-[#606c38]'}`}>
-                                <Award size={48} strokeWidth={1} />
+                    {/* Stats Row - Cleaning & Merging Institutional Info */}
+                    <div className="flex flex-wrap gap-x-16 gap-y-10 pt-16 border-t border-dashed border-[#606c38]/30">
+                        {DATA.stats.map((stat, idx) => (
+                            <div key={idx} className="space-y-1">
+                                <div className={`text-3xl md:text-4xl font-serif font-bold ${isDark ? 'text-white' : 'text-[#283618]'}`}>
+                                    {stat.value}
+                                </div>
+                                <div className={`text-xs font-bold uppercase tracking-widest ${isDark ? 'text-[#a3b18a]' : 'text-[#606c38]'}`}>
+                                    {stat.label}
+                                </div>
                             </div>
-
-                            <h4 className={`text-xl font-bold mb-8 flex items-center gap-3 ${isDark ? 'text-white' : 'text-[#283618]'}`}>
-                                <div className={`w-2 h-2 rounded-full ${isDark ? 'bg-[#a3b18a]' : 'bg-[#606c38]'}`}></div>
-                                Institutional Framework
-                            </h4>
-
-                            <ul className="space-y-8">
-                                <li className="group flex gap-5 items-start">
-                                    <div className={`mt-1 w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-colors ${isDark ? 'bg-[#606c38]/20 text-[#a3b18a] group-hover:bg-[#606c38] group-hover:text-white'
-                                        : 'bg-[#606c38]/10 text-[#606c38] group-hover:bg-[#606c38] group-hover:text-white'
-                                        }`}>
-                                        <Users size={22} />
-                                    </div>
-                                    <div>
-                                        <h5 className={`font-bold text-lg mb-1 ${isDark ? 'text-white' : 'text-[#283618]'}`}>IISER Pune</h5>
-                                        <p className={`text-sm leading-snug ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Department of Physics</p>
-                                    </div>
-                                </li>
-                                <li className="group flex gap-5 items-start">
-                                    <div className={`mt-1 w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-colors ${isDark ? 'bg-[#606c38]/20 text-[#a3b18a] group-hover:bg-[#606c38] group-hover:text-white'
-                                        : 'bg-[#606c38]/10 text-[#606c38] group-hover:bg-[#606c38] group-hover:text-white'
-                                        }`}>
-                                        <Award size={22} />
-                                    </div>
-                                    <div>
-                                        <h5 className={`font-bold text-lg mb-1 ${isDark ? 'text-white' : 'text-[#283618]'}`}>PMRF Scholar</h5>
-                                        <p className={`text-sm leading-snug ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Prime Minister's Research Fellowship (Cycle 5)</p>
-                                    </div>
-                                </li>
-                                <li className="group flex gap-5 items-start">
-                                    <div className={`mt-1 w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-colors ${isDark ? 'bg-[#606c38]/20 text-[#a3b18a] group-hover:bg-[#606c38] group-hover:text-white'
-                                        : 'bg-[#606c38]/10 text-[#606c38] group-hover:bg-[#606c38] group-hover:text-white'
-                                        }`}>
-                                        <BarChart3 size={22} />
-                                    </div>
-                                    <div>
-                                        <h5 className={`font-bold text-lg mb-1 ${isDark ? 'text-white' : 'text-[#283618]'}`}>Election Insights Group</h5>
-                                        <p className={`text-sm leading-snug ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>"Safeguarding Democracy through Data"</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -612,13 +563,13 @@ const SocialIcons = {
 
 const Footer = ({ isDark }) => {
     const socialLinks = [
-        { icon: <SocialIcons.GoogleScholar />, label: "Google Scholar", href: "#" },
-        { icon: <SocialIcons.ResearchGate />, label: "ResearchGate", href: "#" },
-        { icon: <SocialIcons.Orcid />, label: "ORCID", href: "#" },
-        { icon: <Linkedin size={20} />, label: "LinkedIn", href: "#" },
-        { icon: <Twitter size={20} />, label: "Twitter (X)", href: "#" },
-        { icon: <Github size={20} />, label: "GitHub", href: "#" },
-        { icon: <Instagram size={20} />, label: "Instagram", href: "#" }
+        { icon: <SocialIcons.GoogleScholar />, label: "Google Scholar", href: "https://scholar.google.com/citations?user=9_ndyPcAAAAJ&hl=en" },
+        { icon: <SocialIcons.ResearchGate />, label: "ResearchGate", href: "https://www.researchgate.net/profile/Ritam-Pal-3?ev=hdr_xprf" },
+        { icon: <SocialIcons.Orcid />, label: "ORCID", href: "https://orcid.org/0009-0008-5220-2188" },
+        { icon: <Linkedin size={20} />, label: "LinkedIn", href: "https://www.linkedin.com/in/ritam-pal-93932b192/" },
+        { icon: <Twitter size={20} />, label: "Twitter (X)", href: "https://x.com/ritam5013" },
+        { icon: <Github size={20} />, label: "GitHub", href: "https://github.com/ritams" },
+        { icon: <Instagram size={20} />, label: "Instagram", href: "https://www.instagram.com/ritam.5013" }
     ];
 
     return (
