@@ -412,7 +412,7 @@ const Research = ({ isDark }) => {
     return (
         <section id="research" className="py-32 px-6 relative z-10">
             <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-20">
+                <div className="text-left md:text-center mb-20">
                     <h2 className={`text-xs font-bold tracking-[0.2em] uppercase mb-6 inline-block ${isDark ? 'text-[#a3b18a]' : 'text-[#606c38]'}`}>
                         <span className="border-b border-current pb-1">Core Research</span>
                     </h2>
@@ -556,7 +556,7 @@ const SocialIcons = {
     ),
     Orcid: () => (
         <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-            <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.948.948 0 0 1-.947-.947c0-.516.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.306v7.419h2.197c1.062 0 2.053-.506 2.053-2.338 0-1.525-.809-2.338-1.997-2.338h-2.253z" />
+            <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.948.948 0 0 1-.947-.947c0-.516.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.306v7.419h2.197c1.062 0 2.053-.506 2.053-2.338 0-1.525-.809-2.338-1.997-2.338h-2.253z" />
         </svg>
     )
 };
@@ -581,23 +581,23 @@ const Footer = ({ isDark }) => {
                 }`}></div>
 
             <div className="max-w-4xl mx-auto relative z-10">
-                <div className="text-center space-y-8 mb-16">
+                <div className="text-left md:text-center space-y-8 mb-16">
                     <h2 className={`text-4xl md:text-6xl font-serif font-bold ${isDark ? 'text-white' : 'text-[#283618]'}`}>
                         Let's Connect
                     </h2>
-                    <p className={`max-w-xl mx-auto text-lg leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                    <p className={`max-w-xl mx-0 md:mx-auto text-lg leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                         Interested in the intersection of physics and social science? Feel free to reach out for collaborations or inquiries about the Election Insights initiative.
                     </p>
 
-                    <div className="flex justify-center">
+                    <div className="flex justify-start md:justify-center">
                         <a
                             href="mailto:ritam.pal@students.iiserpune.ac.in"
-                            className={`group flex items-center gap-3 px-6 py-3 md:px-8 md:py-4 rounded-full font-medium text-sm md:text-lg transition-all transform hover:scale-105 shadow-lg ${isDark
+                            className={`group flex items-center gap-3 px-5 py-3 md:px-8 md:py-4 rounded-full font-medium text-xs md:text-lg transition-all transform hover:scale-105 shadow-lg ${isDark
                                 ? 'bg-[#606c38] text-white hover:bg-[#4d572d] shadow-[#606c38]/20'
                                 : 'bg-[#606c38] text-white hover:bg-[#4d572d] shadow-[#606c38]/20'
                                 }`}
                         >
-                            <Mail size={20} />
+                            <Mail className="w-4 h-4 md:w-5 md:h-5" />
                             <span className="break-all md:break-normal">ritam.pal@students.iiserpune.ac.in</span>
                         </a>
                     </div>
