@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
     Moon, Sun, Atom, Network, TrendingUp, BookOpen,
     Mail, ExternalLink, ChevronDown, FileText, Award,
-    Cpu, Users, BarChart3, Linkedin, Twitter, Github, Instagram,
-    Copy, Check
+    Cpu, Users, BarChart3, Linkedin, Twitter, Github, Instagram
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 
@@ -375,12 +374,9 @@ const About = ({ isDark }) => {
                         </h2>
                         <h3 className={`text-4xl md:text-6xl font-serif font-bold leading-tight mb-8 max-w-4xl ${isDark ? 'text-white' : 'text-[#283618]'}`}>
                             From Statistical Physics to <br />
-                            <span className="italic relative inline-block px-2 text-[#606c38]">
+                            <span className={`italic relative inline-block px-2 ${isDark ? 'text-[#e9edc9]' : 'text-[#606c38]'}`}>
                                 Social Reality
-                                {/* Underline only in light mode */}
-                                {!isDark && (
-                                    <span className="absolute bottom-2 left-0 w-full h-3 -z-10 opacity-30 bg-[#e9edc9]"></span>
-                                )}
+                                <span className={`absolute bottom-2 left-0 w-full h-3 -z-10 opacity-30 ${isDark ? 'bg-[#606c38]' : 'bg-[#e9edc9]'}`}></span>
                             </span>
                         </h3>
                         <div className={`space-y-8 text-lg md:text-xl leading-relaxed font-light max-w-3xl ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
@@ -566,8 +562,6 @@ const SocialIcons = {
 };
 
 const Footer = ({ isDark }) => {
-    const [copied, setCopied] = useState(false);
-
     const socialLinks = [
         { icon: <SocialIcons.GoogleScholar />, label: "Google Scholar", href: "https://scholar.google.com/citations?user=9_ndyPcAAAAJ&hl=en" },
         { icon: <SocialIcons.ResearchGate />, label: "ResearchGate", href: "https://www.researchgate.net/profile/Ritam-Pal-3?ev=hdr_xprf" },
@@ -577,12 +571,6 @@ const Footer = ({ isDark }) => {
         { icon: <Github size={20} />, label: "GitHub", href: "https://github.com/ritams" },
         { icon: <Instagram size={20} />, label: "Instagram", href: "https://www.instagram.com/ritam.5013" }
     ];
-
-    const handleCopy = () => {
-        navigator.clipboard.writeText("ritam.pal@students.iiserpune.ac.in");
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-    };
 
     return (
         <footer id="contact" className={`relative py-24 px-6 overflow-hidden ${isDark ? 'bg-[#151515]' : 'bg-[#f4f5f0]'}`}>
@@ -601,82 +589,36 @@ const Footer = ({ isDark }) => {
                         Interested in the intersection of physics and social science? Feel free to reach out for collaborations or inquiries about the Election Insights initiative.
                     </p>
 
-                    {/* Email Section */}
-                    <div className="flex flex-col items-start md:items-center w-full md:w-auto mb-8">
-                        <h3 className={`text-xs font-bold tracking-[0.2em] uppercase mb-4 ${isDark ? 'text-[#a3b18a]' : 'text-[#606c38]'}`}>
-                            EMAIL
-                        </h3>
-                        <div className="w-full flex justify-start md:justify-center">
-                            <div
-                                className={`group relative w-auto inline-flex items-center justify-between gap-4 p-2 pl-6 pr-6 rounded-2xl border transition-all duration-300 ${isDark
-                                    ? 'bg-[#1a1a1a]/40 border-[#606c38]/30 hover:bg-[#1a1a1a]/60 hover:border-[#606c38]/60 backdrop-blur-sm'
-                                    : 'bg-white/40 border-[#606c38]/20 hover:bg-white/80 hover:border-[#606c38]/40 backdrop-blur-sm'
-                                    }`}
-                            >
-                                {/* Email Link */}
-                                <a
-                                    href="mailto:ritam.pal@students.iiserpune.ac.in"
-                                    className={`flex items-center gap-3 font-medium transition-colors ${isDark ? 'text-gray-200 hover:text-white' : 'text-[#283618] hover:text-[#606c38]'
-                                        }`}
-                                >
-                                    {/* Icon removed */}
-                                    <span className="text-[3vw] sm:text-sm md:text-base break-all sm:break-normal">
-                                        ritam.pal@students.iiserpune.ac.in
-                                    </span>
-                                </a>
-
-                                {/* Copy Button */}
-                                <button
-                                    onClick={handleCopy}
-                                    className={`p-2 rounded-xl transition-all duration-200 ${isDark
-                                        ? 'bg-[#606c38]/20 text-[#a3b18a] hover:bg-[#606c38] hover:text-white'
-                                        : 'bg-[#606c38]/10 text-[#606c38] hover:bg-[#606c38] hover:text-white'
-                                        }`}
-                                    aria-label="Copy email"
-                                >
-                                    {copied ? <Check size={16} /> : <Copy size={16} />}
-                                </button>
-
-                                {/* Tooltip confirmation */}
-                                <AnimatePresence>
-                                    {copied && (
-                                        <motion.div
-                                            initial={{ opacity: 0, y: 10 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            exit={{ opacity: 0, y: 10 }}
-                                            className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1 rounded-lg text-xs font-bold bg-[#606c38] text-white pointer-events-none"
-                                        >
-                                            Copied!
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-                            </div>
-                        </div>
+                    <div className="flex justify-start md:justify-center">
+                        <a
+                            href="mailto:ritam.pal@students.iiserpune.ac.in"
+                            className={`group flex items-center gap-3 px-5 py-3 md:px-8 md:py-4 rounded-full font-medium text-xs md:text-lg transition-all transform hover:scale-105 shadow-lg ${isDark
+                                ? 'bg-[#606c38] text-white hover:bg-[#4d572d] shadow-[#606c38]/20'
+                                : 'bg-[#606c38] text-white hover:bg-[#4d572d] shadow-[#606c38]/20'
+                                }`}
+                        >
+                            <Mail className="w-4 h-4 md:w-5 md:h-5" />
+                            <span className="break-all md:break-normal">ritam.pal@students.iiserpune.ac.in</span>
+                        </a>
                     </div>
-
                 </div>
 
                 {/* Social Links Grid */}
-                <div className="flex flex-col items-start md:items-center w-full mb-16">
-                    <h3 className={`text-xs font-bold tracking-[0.2em] uppercase mb-4 ${isDark ? 'text-[#a3b18a]' : 'text-[#606c38]'}`}>
-                        SOCIALS
-                    </h3>
-                    <div className="flex flex-wrap justify-start md:justify-center gap-4">
-                        {socialLinks.map((link, idx) => (
-                            <a
-                                key={idx}
-                                href={link.href}
-                                aria-label={link.label}
-                                className={`p-4 rounded-full border transition-all duration-300 hover:scale-110 ${isDark
-                                    ? 'bg-[#1a1a1a] border-[#333] text-gray-400 hover:border-[#606c38] hover:text-[#a3b18a]'
-                                    : 'bg-white border-gray-200 text-gray-600 hover:border-[#606c38] hover:text-[#606c38]'
-                                    }`}
-                                title={link.label}
-                            >
-                                {link.icon}
-                            </a>
-                        ))}
-                    </div>
+                <div className="flex flex-wrap justify-center gap-4 mb-16">
+                    {socialLinks.map((link, idx) => (
+                        <a
+                            key={idx}
+                            href={link.href}
+                            aria-label={link.label}
+                            className={`p-4 rounded-full border transition-all duration-300 hover:scale-110 ${isDark
+                                ? 'bg-[#1a1a1a] border-[#333] text-gray-400 hover:border-[#606c38] hover:text-[#a3b18a]'
+                                : 'bg-white border-gray-200 text-gray-600 hover:border-[#606c38] hover:text-[#606c38]'
+                                }`}
+                            title={link.label}
+                        >
+                            {link.icon}
+                        </a>
+                    ))}
                 </div>
 
                 <div className={`pt-8 border-t text-center text-sm ${isDark ? 'border-[#333] text-gray-500' : 'border-[#606c38]/10 text-gray-500'}`}>
@@ -684,7 +626,7 @@ const Footer = ({ isDark }) => {
                     <p>Designed with <span className={`font-serif italic ${isDark ? 'text-[#a3b18a]' : 'text-[#606c38]'}`}>Universal Laws</span>.</p>
                 </div>
             </div>
-        </footer >
+        </footer>
     );
 };
 
