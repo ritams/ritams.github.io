@@ -375,9 +375,8 @@ const About = ({ isDark }) => {
                         </h2>
                         <h3 className={`text-4xl md:text-6xl font-serif font-bold leading-tight mb-8 max-w-4xl ${isDark ? 'text-white' : 'text-[#283618]'}`}>
                             From Statistical Physics to <br />
-                            <span className={`italic relative inline-block px-2 ${isDark ? 'text-[#e9edc9]' : 'text-[#606c38]'}`}>
+                            <span className={`italic relative inline-block px-2 ${isDark ? 'text-[#606c38]' : 'text-[#606c38]'}`}>
                                 Social Reality
-                                <span className={`absolute bottom-2 left-0 w-full h-3 -z-10 opacity-30 ${isDark ? 'bg-[#606c38]' : 'bg-[#e9edc9]'}`}></span>
                             </span>
                         </h3>
                         <div className={`space-y-8 text-lg md:text-xl leading-relaxed font-light max-w-3xl ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
@@ -598,7 +597,7 @@ const Footer = ({ isDark }) => {
                 </h2>
 
                 {/* Description */}
-                <p className={`text-lg md:text-xl leading-relaxed max-w-2xl mb-16 ${isDark ? 'text-[#a3b18a]' : 'text-[#4d572d]'}`}>
+                <p className={`text-lg md:text-xl leading-relaxed max-w-2xl mb-16 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                     Interested in the intersection of physics and social science? Feel free to
                     reach out for collaborations or inquiries about the Election Insights
                     initiative.
