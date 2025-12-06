@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
     Moon, Sun, Atom, Network, TrendingUp, BookOpen,
     Mail, ExternalLink, ChevronDown, FileText, Award,
-    Cpu, Users, BarChart3, Linkedin, Twitter, Github, Instagram
+    Cpu, Users, BarChart3, Linkedin, Twitter, Github, Instagram,
+    Copy, Check
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 
@@ -562,6 +563,15 @@ const SocialIcons = {
 };
 
 const Footer = ({ isDark }) => {
+    const [copied, setCopied] = useState(false);
+    const email = "ritam.pal@students.iiserpune.ac.in";
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(email);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
     const socialLinks = [
         { icon: <SocialIcons.GoogleScholar />, label: "Google Scholar", href: "https://scholar.google.com/citations?user=9_ndyPcAAAAJ&hl=en" },
         { icon: <SocialIcons.ResearchGate />, label: "ResearchGate", href: "https://www.researchgate.net/profile/Ritam-Pal-3?ev=hdr_xprf" },
@@ -573,55 +583,74 @@ const Footer = ({ isDark }) => {
     ];
 
     return (
-        <footer id="contact" className={`relative py-24 px-6 overflow-hidden ${isDark ? 'bg-[#151515]' : 'bg-[#f4f5f0]'}`}>
+        <footer id="contact" className={`relative py-32 px-6 overflow-hidden ${isDark ? 'bg-[#151515] text-[#f4f5f0]' : 'bg-[#f4f5f0] text-[#1a1a1a]'}`}>
             {/* Decorative Background */}
             <div className={`absolute inset-0 opacity-50 pointer-events-none ${isDark
                 ? 'bg-[radial-gradient(circle_at_50%_100%,rgba(96,108,56,0.15),transparent_50%)]'
                 : 'bg-[radial-gradient(circle_at_50%_100%,rgba(96,108,56,0.1),transparent_50%)]'
                 }`}></div>
 
-            <div className="max-w-4xl mx-auto relative z-10">
-                <div className="text-left md:text-center space-y-8 mb-16">
-                    <h2 className={`text-4xl md:text-6xl font-serif font-bold ${isDark ? 'text-white' : 'text-[#283618]'}`}>
-                        Let's Connect
-                    </h2>
-                    <p className={`max-w-xl mx-0 md:mx-auto text-lg leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                        Interested in the intersection of physics and social science? Feel free to reach out for collaborations or inquiries about the Election Insights initiative.
-                    </p>
+            <div className="max-w-3xl mx-auto relative z-10 flex flex-col items-center text-center">
 
-                    <div className="flex justify-start md:justify-center">
-                        <a
-                            href="mailto:ritam.pal@students.iiserpune.ac.in"
-                            className={`group flex items-center gap-3 px-5 py-3 md:px-8 md:py-4 rounded-full font-medium text-xs md:text-lg transition-all transform hover:scale-105 shadow-lg ${isDark
-                                ? 'bg-[#606c38] text-white hover:bg-[#4d572d] shadow-[#606c38]/20'
-                                : 'bg-[#606c38] text-white hover:bg-[#4d572d] shadow-[#606c38]/20'
+                {/* Title */}
+                <h2 className={`text-6xl md:text-7xl font-serif font-bold mb-8 ${isDark ? 'text-[#f4f5f0]' : 'text-[#283618]'}`}>
+                    Let's Connect
+                </h2>
+
+                {/* Description */}
+                <p className={`text-lg md:text-xl leading-relaxed max-w-2xl mb-16 ${isDark ? 'text-[#a3b18a]' : 'text-[#4d572d]'}`}>
+                    Interested in the intersection of physics and social science? Feel free to
+                    reach out for collaborations or inquiries about the Election Insights
+                    initiative.
+                </p>
+
+                {/* Email Section */}
+                <div className="w-full flex flex-col items-center gap-4 mb-20">
+                    <span className="text-xs font-bold tracking-[0.2em] uppercase text-[#606c38]">Email</span>
+
+                    <div className={`flex items-center gap-3 px-6 py-4 rounded-2xl border transition-all ${isDark
+                        ? 'bg-[#1a1a1a] border-[#333]'
+                        : 'bg-white border-[#e2e8f0]'
+                        }`}>
+                        <span className={`text-lg md:text-xl font-medium ${isDark ? 'text-gray-200' : 'text-[#283618]'}`}>
+                            {email}
+                        </span>
+
+                        <button
+                            onClick={handleCopy}
+                            className={`p-2 rounded-lg transition-colors ${isDark
+                                ? 'bg-[#2a2a2a] hover:bg-[#333] text-gray-400'
+                                : 'bg-[#f1f5f9] hover:bg-[#e2e8f0] text-gray-600'
                                 }`}
+                            aria-label="Copy email"
                         >
-                            <Mail className="w-4 h-4 md:w-5 md:h-5" />
-                            <span className="break-all md:break-normal">ritam.pal@students.iiserpune.ac.in</span>
-                        </a>
+                            {copied ? <Check size={18} className="text-[#606c38]" /> : <Copy size={18} />}
+                        </button>
                     </div>
                 </div>
 
-                {/* Social Links Grid */}
-                <div className="flex flex-wrap justify-center gap-4 mb-16">
-                    {socialLinks.map((link, idx) => (
-                        <a
-                            key={idx}
-                            href={link.href}
-                            aria-label={link.label}
-                            className={`p-4 rounded-full border transition-all duration-300 hover:scale-110 ${isDark
-                                ? 'bg-[#1a1a1a] border-[#333] text-gray-400 hover:border-[#606c38] hover:text-[#a3b18a]'
-                                : 'bg-white border-gray-200 text-gray-600 hover:border-[#606c38] hover:text-[#606c38]'
-                                }`}
-                            title={link.label}
-                        >
-                            {link.icon}
-                        </a>
-                    ))}
+                {/* Socials Section */}
+                <div className="flex flex-col items-center gap-6">
+                    <span className="text-xs font-bold tracking-[0.2em] uppercase text-[#606c38]">Socials</span>
+
+                    <div className="flex flex-wrap justify-center gap-4">
+                        {socialLinks.map((link, idx) => (
+                            <a
+                                key={idx}
+                                href={link.href}
+                                aria-label={link.label}
+                                className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 ${isDark
+                                    ? 'bg-[#1a1a1a] text-gray-400 hover:text-white shadow-lg shadow-black/20'
+                                    : 'bg-white text-gray-600 hover:text-[#283618] shadow-lg shadow-gray-200'
+                                    }`}
+                            >
+                                {link.icon}
+                            </a>
+                        ))}
+                    </div>
                 </div>
 
-                <div className={`pt-8 border-t text-center text-sm ${isDark ? 'border-[#333] text-gray-500' : 'border-[#606c38]/10 text-gray-500'}`}>
+                <div className={`mt-20 pt-8 border-t w-full text-center text-sm ${isDark ? 'border-[#333] text-gray-500' : 'border-[#606c38]/10 text-gray-500'}`}>
                     <p className="mb-2">&copy; {new Date().getFullYear()} Ritam Pal. All rights reserved.</p>
                     <p>Designed with <span className={`font-serif italic ${isDark ? 'text-[#a3b18a]' : 'text-[#606c38]'}`}>Universal Laws</span>.</p>
                 </div>
