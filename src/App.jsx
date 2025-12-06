@@ -42,7 +42,7 @@ const DATA = {
             title: "Depolarizing Social Networks",
             icon: <Network className="w-6 h-6" />,
             desc: "Investigating the physics of echo chambers. We propose 'random nudges'—stochastic noise—as a mechanism to destabilize extreme consensus and foster social cohesion.",
-            impact: "A physics-based solution to online polarization."
+            impact: "A proof of concept solution to online polarization."
         }
     ],
     publications: [
@@ -658,6 +658,40 @@ const Footer = ({ isDark }) => {
     );
 };
 
+const ThemeToggle = ({ isDark, toggleTheme }) => {
+    return (
+        <motion.button
+            onClick={toggleTheme}
+            className={`fixed bottom-6 right-6 p-3 rounded-full z-50 flex items-center justify-center transition-all duration-500 backdrop-blur-sm border
+                ${isDark
+                    ? 'bg-[#1a1a1a]/30 border-white/10 hover:bg-[#1a1a1a]/80 text-[#a3b18a] hover:backdrop-blur-md'
+                    : 'bg-white/30 border-black/5 hover:bg-white/80 text-[#606c38] hover:backdrop-blur-md'
+                }
+                group shadow-lg hover:shadow-2xl`}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+        >
+            <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                    key={isDark ? "dark" : "light"}
+                    initial={{ y: -20, opacity: 0, rotate: -90 }}
+                    animate={{ y: 0, opacity: 1, rotate: 0 }}
+                    exit={{ y: 20, opacity: 0, rotate: 90 }}
+                    transition={{ duration: 0.2 }}
+                >
+                    {isDark ? (
+                        <Sun size={20} className="opacity-70 group-hover:opacity-100 transition-opacity" />
+                    ) : (
+                        <Moon size={20} className="opacity-70 group-hover:opacity-100 transition-opacity" />
+                    )}
+                </motion.div>
+            </AnimatePresence>
+        </motion.button>
+    );
+};
+
 export default function App() {
     // Theme state
     const [isDark, setIsDark] = useState(false);
@@ -679,14 +713,8 @@ export default function App() {
             </div>
 
             {/* Floating Theme Toggle */}
-            <button
-                onClick={toggleTheme}
-                className={`fixed bottom-6 right-6 p-3 rounded-full shadow-2xl z-50 transition-all duration-300 hover:scale-110 ${isDark ? 'bg-[#1a1a1a]/80 text-[#a3b18a] border border-[#606c38]/30 backdrop-blur-md' : 'bg-white/80 text-[#606c38] border border-[#606c38]/20 backdrop-blur-md'
-                    }`}
-                aria-label="Toggle Theme"
-            >
-                {isDark ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
+            {/* Floating Theme Toggle */}
+            <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
         </div>
     );
 }
