@@ -177,8 +177,8 @@ const NavBar = ({ isDark, toggleTheme }) => {
 
     return (
         <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled
-            ? (isDark ? 'bg-[#1a1a1a]/80 backdrop-blur-md border-b border-[#606c38]/20' : 'bg-white/80 backdrop-blur-md border-b border-[#606c38]/10')
-            : 'bg-transparent'
+            ? (isDark ? 'bg-[#1a1a1a]/90 backdrop-blur-md border-b border-[#606c38]/20' : 'bg-white/90 backdrop-blur-md border-b border-[#606c38]/10')
+            : (isDark ? 'bg-[#1a1a1a]/70 backdrop-blur-sm' : 'bg-white/70 backdrop-blur-sm')
             }`}>
             <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                 {/* Updated Title: Thin, Spaced Out */}
@@ -193,7 +193,7 @@ const NavBar = ({ isDark, toggleTheme }) => {
                             <a
                                 key={item}
                                 href={`#${item.toLowerCase()}`}
-                                className={`${isDark ? 'text-gray-300 hover:text-[#a3b18a]' : 'text-gray-600 hover:text-[#606c38]'} transition-colors`}
+                                className={`${isDark ? 'text-gray-200 hover:text-[#a3b18a]' : 'text-[#283618] hover:text-[#606c38]'} transition-colors`}
                             >
                                 {item}
                             </a>
@@ -215,20 +215,36 @@ const NavBar = ({ isDark, toggleTheme }) => {
 
 const Hero = ({ isDark }) => {
     return (
-        <section className="relative min-h-screen flex items-center justify-center pt-20 px-6 overflow-hidden">
-            <div className="max-w-6xl w-full grid md:grid-cols-2 gap-12 items-center z-10">
+        <section className="relative min-h-screen flex flex-col md:flex-row overflow-hidden">
+            {/* Mobile: Full-width Image at Top */}
+            <div className="md:hidden w-full h-64 relative">
+                <img
+                    src="/ritam.jpg"
+                    alt="Ritam Pal"
+                    className="w-full h-full object-cover object-top"
+                />
+                <div className={`absolute inset-0 ${isDark
+                    ? 'bg-gradient-to-b from-transparent via-transparent to-[#151515]'
+                    : 'bg-gradient-to-b from-transparent via-transparent to-[#f4f5f0]'
+                    }`}></div>
+            </div>
+
+            {/* Left: Content */}
+            <div className="w-full md:w-1/2 lg:w-[55%] flex items-center justify-center px-6 md:px-12 lg:px-16 pt-8 md:pt-24 pb-12 z-10">
                 <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="space-y-6"
+                    className="space-y-6 max-w-xl"
                 >
+
+
                     <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase ${isDark ? 'bg-[#606c38]/20 text-[#a3b18a]' : 'bg-[#606c38]/10 text-[#606c38]'
                         }`}>
                         <Atom size={14} /> Sociophysics Researcher
                     </div>
 
-                    <h1 className={`text-5xl md:text-7xl font-serif font-bold leading-tight ${isDark ? 'text-white' : 'text-[#283618]'
+                    <h1 className={`text-5xl md:text-6xl lg:text-7xl font-serif font-bold leading-tight ${isDark ? 'text-white' : 'text-[#283618]'
                         }`}>
                         Order out of <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#606c38] to-[#a3b18a]">
@@ -236,7 +252,7 @@ const Hero = ({ isDark }) => {
                         </span>
                     </h1>
 
-                    <p className={`text-lg md:text-xl leading-relaxed max-w-lg ${isDark ? 'text-gray-400' : 'text-gray-600'
+                    <p className={`text-lg md:text-xl leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'
                         }`}>
                         {DATA.tagline} Using the tools of statistical physics to understand the "noise" of democracy and social networks.
                     </p>
@@ -262,35 +278,35 @@ const Hero = ({ isDark }) => {
                         </a>
                     </div>
                 </motion.div>
-
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    className="relative flex justify-center md:justify-end"
-                >
-                    <div className="relative w-72 h-72 md:w-96 md:h-96">
-                        {/* Decorative Rings */}
-                        <div className={`absolute inset-0 rounded-full border-2 border-dashed animate-spin-slow ${isDark ? 'border-[#606c38]/30' : 'border-[#606c38]/20'}`} style={{ animationDuration: '20s' }}></div>
-                        <div className={`absolute inset-4 rounded-full border border-dotted animate-spin-reverse-slow ${isDark ? 'border-[#a3b18a]/20' : 'border-[#606c38]/20'}`} style={{ animationDuration: '15s' }}></div>
-
-                        {/* Image Placeholder */}
-                        <div className="absolute inset-6 rounded-full overflow-hidden shadow-2xl border-4 border-[#606c38] group">
-                            <img
-                                src="/ritam.jpg"
-                                alt="Ritam Pal"
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                            />
-                            <div className={`absolute inset-0 ${isDark ? 'bg-[#606c38]/20' : 'bg-[#606c38]/10'} mix-blend-overlay`}></div>
-                        </div>
-                    </div>
-                </motion.div>
             </div>
 
+            {/* Right: Full-height Image */}
+            <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                className="hidden md:block md:w-1/2 lg:w-[45%] relative"
+            >
+                <div className="absolute inset-0 overflow-hidden">
+                    <img
+                        src="/ritam.jpg"
+                        alt="Ritam Pal"
+                        className="w-full h-full object-cover object-center"
+                    />
+                    {/* Gradient overlay for better text contrast */}
+                    <div className={`absolute inset-0 ${isDark
+                        ? 'bg-gradient-to-l from-transparent via-transparent to-[#151515]'
+                        : 'bg-gradient-to-l from-transparent via-transparent to-[#f4f5f0]'
+                        }`}></div>
+                    <div className={`absolute inset-0 ${isDark ? 'bg-[#606c38]/10' : 'bg-[#606c38]/5'} mix-blend-overlay`}></div>
+                </div>
+            </motion.div>
+
+            {/* Scroll indicator */}
             <motion.div
                 animate={{ y: [0, 10, 0] }}
                 transition={{ repeat: Infinity, duration: 2 }}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-50"
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-50 z-20"
             >
                 <ChevronDown size={32} className={isDark ? 'text-white' : 'text-[#283618]'} />
             </motion.div>
@@ -487,7 +503,7 @@ const Footer = ({ isDark }) => {
 
 export default function App() {
     // Theme state
-    const [isDark, setIsDark] = useState(true);
+    const [isDark, setIsDark] = useState(false);
 
     // Toggle theme
     const toggleTheme = () => setIsDark(!isDark);
