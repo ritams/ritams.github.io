@@ -317,19 +317,19 @@ const Hero = ({ isDark }) => {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, ease: "easeOut" }}
-                            className="space-y-8 max-w-2xl relative"
+                            className="space-y-10 max-w-2xl relative"
                         >
-                            <div className={`inline-flex items-center gap-3 px-4 py-2 rounded-full text-xs font-bold tracking-[0.2em] uppercase border ${isDark
-                                ? 'bg-[#606c38]/10 text-[#a3b18a] border-[#606c38]/20'
-                                : 'bg-[#606c38]/5 text-[#606c38] border-[#606c38]/10'
+                            <div className={`text-xs font-bold tracking-[0.2em] uppercase mb-6 inline-block ${isDark
+                                ? 'text-[#a3b18a]'
+                                : 'text-[#606c38]'
                                 }`}>
-                                <Atom size={14} /> Sociophysics Researcher
+                                <span className="border-b border-current pb-1">Sociophysics Researcher</span>
                             </div>
 
-                            <h1 className={`text-5xl md:text-7xl lg:text-8xl font-serif font-bold leading-[0.9] tracking-tight ${isDark ? 'text-white' : 'text-[#283618]'
+                            <h1 className={`text-6xl md:text-8xl font-serif font-medium leading-[0.95] tracking-tight ${isDark ? 'text-white' : 'text-[#283618]'
                                 }`}>
                                 Order out of <br />
-                                <span className={`italic ${isDark ? 'text-[#606c38]' : 'text-[#606c38]'}`}>
+                                <span className={`italic font-light ${isDark ? 'text-[#606c38]' : 'text-[#606c38]'}`}>
                                     Chaos
                                 </span>
                             </h1>
@@ -339,21 +339,21 @@ const Hero = ({ isDark }) => {
                                 {DATA.tagline} Using the tools of statistical physics to understand the "noise" of democracy and social networks.
                             </p>
 
-                            <div className="flex flex-wrap gap-5 pt-4">
+                            <div className="flex flex-wrap gap-6 pt-6">
                                 <a
                                     href="#research"
-                                    className={`px-10 py-4 rounded-full font-medium text-lg transition-all transform hover:scale-105 shadow-xl ${isDark
-                                        ? 'bg-[#606c38] text-white hover:bg-[#4d572d] shadow-[#606c38]/20'
-                                        : 'bg-[#606c38] text-white hover:bg-[#4d572d] shadow-[#606c38]/20'
+                                    className={`group px-8 py-3 rounded-full text-sm font-medium tracking-widest uppercase transition-all duration-300 ${isDark
+                                        ? 'bg-[#f4f5f0] text-[#151515] hover:bg-[#606c38] hover:text-white'
+                                        : 'bg-[#151515] text-[#f4f5f0] hover:bg-[#606c38] hover:text-white'
                                         }`}
                                 >
                                     Explore Research
                                 </a>
                                 <a
                                     href="#contact"
-                                    className={`px-10 py-4 rounded-full font-medium text-lg border transition-all hover:bg-[#606c38]/5 ${isDark
-                                        ? 'border-[#606c38]/50 text-[#a3b18a] hover:text-white hover:border-[#606c38]'
-                                        : 'border-[#606c38]/30 text-[#606c38] hover:border-[#606c38]'
+                                    className={`group px-8 py-3 rounded-full text-sm font-medium tracking-widest uppercase border transition-all duration-300 ${isDark
+                                        ? 'border-white/20 text-white hover:border-[#606c38] hover:text-[#606c38]'
+                                        : 'border-[#151515]/20 text-[#151515] hover:border-[#606c38] hover:text-[#606c38]'
                                         }`}
                                 >
                                     Contact Me
@@ -377,9 +377,8 @@ const About = ({ isDark }) => {
                 <div className="space-y-12">
                     {/* Main Narrative - Full Width/Centered */}
                     <div>
-                        <h2 className={`text-xs font-bold tracking-[0.2em] uppercase mb-6 flex items-center gap-3 ${isDark ? 'text-[#a3b18a]' : 'text-[#606c38]'}`}>
-                            <span className="w-8 h-[1px] bg-current"></span>
-                            About The Researcher
+                        <h2 className={`text-xs font-bold tracking-[0.2em] uppercase mb-6 inline-block ${isDark ? 'text-[#a3b18a]' : 'text-[#606c38]'}`}>
+                            <span className="border-b border-current pb-1">About The Researcher</span>
                         </h2>
                         <h3 className={`text-4xl md:text-6xl font-serif font-bold leading-tight mb-8 max-w-4xl ${isDark ? 'text-white' : 'text-[#283618]'}`}>
                             From Statistical Physics to <br />
@@ -492,8 +491,8 @@ const Publications = ({ isDark }) => {
             <div className="max-w-7xl mx-auto">
                 <div className="mb-16 flex items-end justify-between border-b border-[#606c38]/20 pb-8">
                     <div>
-                        <h2 className={`text-xs font-bold tracking-[0.2em] uppercase mb-4 ${isDark ? 'text-[#a3b18a]' : 'text-[#606c38]'}`}>
-                            Academic Output
+                        <h2 className={`text-xs font-bold tracking-[0.2em] uppercase mb-6 inline-block ${isDark ? 'text-[#a3b18a]' : 'text-[#606c38]'}`}>
+                            <span className="border-b border-current pb-1">Academic Output</span>
                         </h2>
                         <h3 className={`text-3xl md:text-4xl font-serif font-bold flex items-center gap-4 ${isDark ? 'text-white' : 'text-[#283618]'}`}>
                             Selected Publications
