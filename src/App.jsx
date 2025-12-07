@@ -180,6 +180,25 @@ const NavBar = ({ isDark, toggleTheme }) => {
 
     const navLinks = ['About', 'Research', 'Publications', 'Contact'];
 
+    const handleMobileNavClick = (e, targetId) => {
+        e.preventDefault();
+        setMobileMenuOpen(false);
+
+        setTimeout(() => {
+            const element = document.querySelector(targetId);
+            if (element) {
+                const headerOffset = 80;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }
+        }, 100);
+    };
+
     return (
         <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled || mobileMenuOpen
             ? (isDark ? 'bg-[#1a1a1a]/90 backdrop-blur-md border-b border-[#606c38]/20' : 'bg-white/90 backdrop-blur-md border-b border-[#606c38]/10')
@@ -235,7 +254,7 @@ const NavBar = ({ isDark, toggleTheme }) => {
                                 <a
                                     key={item}
                                     href={`#${item.toLowerCase()}`}
-                                    onClick={() => setMobileMenuOpen(false)}
+                                    onClick={(e) => handleMobileNavClick(e, `#${item.toLowerCase()}`)}
                                     className={`text-lg font-light tracking-[0.2em] uppercase ${isDark ? 'text-gray-200' : 'text-[#283618]'
                                         }`}
                                 >
