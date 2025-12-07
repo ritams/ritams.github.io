@@ -251,7 +251,7 @@ const NavBar = ({ isDark, toggleTheme }) => {
 };
 
 const Hero = ({ isDark }) => {
-    const themeImage = isDark ? "/ritam_darkmode.png" : "/ritam.jpg";
+    const themeImage = isDark ? "/ritam-darkmode.jpg" : "/ritam-lightmode.jpg";
     return (
         <section id="hero" className="relative min-h-screen overflow-hidden">
             {/* Mobile: Full-width Image at Top (< md only) */}
