@@ -35,7 +35,7 @@ const DATA = {
             title: "Universality in Elections",
             icon: <BarChart3 className="w-6 h-6" />,
             desc: "Our analysis of 34 nations reveals that voter turnout and margins are inherently correlated. Crucially, we show that a scaled ratio of margin and turnout exhibits a robust universal distribution across diverse democratic systems.",
-            impact: "Published in Physical Review Letters (2025)."
+            impact: "Universality acts as a diagnostic tool to flag large-scale electoral malpractice."
         },
         {
             id: 3,
@@ -51,28 +51,28 @@ const DATA = {
             journal: "Physical Review Letters, 134, 017401",
             year: "2025",
             tag: "Nature Research Highlight",
-            link: "#"
+            link: "https://link.aps.org/doi/10.1103/PhysRevLett.134.017401"
         },
         {
             title: "Voter Turnouts Govern Key Electoral Statistics",
             journal: "arXiv:2501.01896",
             year: "2025",
             tag: "Preprint",
-            link: "#"
+            link: "https://arxiv.org/abs/2501.01896"
         },
         {
             title: "Depolarization of opinions on social networks through random nudges",
             journal: "Physical Review E, 108, 034307",
             year: "2023",
             tag: "Journal Article",
-            link: "#"
+            link: "https://journals.aps.org/pre/abstract/10.1103/PhysRevE.108.034307"
         },
         {
             title: "The physics and maths of keeping elections fair and representative",
             journal: "The Hindu",
             year: "2024",
             tag: "Op-Ed",
-            link: "#"
+            link: "https://sites.iiserpune.ac.in/~santh/thehindu_elections_mss.png"
         }
     ]
 };
@@ -197,19 +197,19 @@ const NavBar = ({ isDark, toggleTheme }) => {
             }`}>
             <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                 {/* Updated Title: Thin, Spaced Out */}
-                <div className="text-xl md:text-2xl font-light tracking-[0.3em] uppercase relative z-50">
+                <a href="#hero" className="text-xl md:text-2xl font-light tracking-[0.3em] uppercase relative z-50 cursor-pointer block hover:opacity-80 transition-opacity">
                     <span className={isDark ? 'text-white' : 'text-[#283618]'}>Ritam</span>
                     <span className="text-[#606c38] ml-3">Pal</span>
-                </div>
+                </a>
 
                 <div className="flex items-center gap-6">
                     {/* Desktop Menu */}
-                    <div className="hidden md:flex gap-6 text-sm font-medium tracking-wide">
+                    <div className="hidden md:flex gap-8 text-xs font-light tracking-[0.2em] uppercase">
                         {['About', 'Research', 'Publications', 'Contact'].map((item) => (
                             <a
                                 key={item}
                                 href={`#${item.toLowerCase()}`}
-                                className={`${isDark ? 'text-gray-200 hover:text-[#a3b18a]' : 'text-[#283618] hover:text-[#606c38]'} transition-colors`}
+                                className={`${isDark ? 'text-gray-200 hover:text-[#a3b18a]' : 'text-[#283618] hover:text-[#606c38]'} transition-colors duration-300`}
                             >
                                 {item}
                             </a>
@@ -262,12 +262,13 @@ const NavBar = ({ isDark, toggleTheme }) => {
 };
 
 const Hero = ({ isDark }) => {
+    const themeImage = isDark ? "/ritam_darkmode.png" : "/ritam.jpg";
     return (
-        <section className="relative min-h-screen flex flex-col md:flex-row overflow-hidden">
-            {/* Mobile: Full-width Image at Top */}
+        <section id="hero" className="relative min-h-screen overflow-hidden">
+            {/* Mobile: Full-width Image at Top (< md only) */}
             <div className="md:hidden w-full h-[50vh] relative">
                 <img
-                    src="/ritam.jpg"
+                    src={themeImage}
                     alt="Ritam Pal"
                     className="w-full h-full object-cover object-top"
                 />
@@ -277,74 +278,20 @@ const Hero = ({ isDark }) => {
                     }`}></div>
             </div>
 
-            {/* Left: Content */}
-            <div className="w-full md:w-1/2 lg:w-[55%] flex items-center justify-center px-6 md:px-12 lg:px-20 pt-8 md:pt-0 z-10 relative">
-                {/* Background Glow */}
-                <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-3xl opacity-30 pointer-events-none ${isDark ? 'bg-[#606c38]/20' : 'bg-[#606c38]/10'}`} />
-
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                    className="space-y-8 max-w-2xl relative"
-                >
-                    <div className={`inline-flex items-center gap-3 px-4 py-2 rounded-full text-xs font-bold tracking-[0.2em] uppercase border ${isDark
-                        ? 'bg-[#606c38]/10 text-[#a3b18a] border-[#606c38]/20'
-                        : 'bg-[#606c38]/5 text-[#606c38] border-[#606c38]/10'
-                        }`}>
-                        <Atom size={14} /> Sociophysics Researcher
-                    </div>
-
-                    <h1 className={`text-5xl md:text-7xl lg:text-8xl font-serif font-bold leading-[0.9] tracking-tight ${isDark ? 'text-white' : 'text-[#283618]'
-                        }`}>
-                        Order out of <br />
-                        <span className={`italic ${isDark ? 'text-[#606c38]' : 'text-[#606c38]'}`}>
-                            Chaos
-                        </span>
-                    </h1>
-
-                    <p className={`text-xl md:text-2xl leading-relaxed font-light max-w-lg ${isDark ? 'text-gray-300' : 'text-gray-600'
-                        }`}>
-                        {DATA.tagline} Using the tools of statistical physics to understand the "noise" of democracy and social networks.
-                    </p>
-
-                    <div className="flex flex-wrap gap-5 pt-4">
-                        <a
-                            href="#research"
-                            className={`px-10 py-4 rounded-full font-medium text-lg transition-all transform hover:scale-105 shadow-xl ${isDark
-                                ? 'bg-[#606c38] text-white hover:bg-[#4d572d] shadow-[#606c38]/20'
-                                : 'bg-[#606c38] text-white hover:bg-[#4d572d] shadow-[#606c38]/20'
-                                }`}
-                        >
-                            Explore Research
-                        </a>
-                        <a
-                            href="#contact"
-                            className={`px-10 py-4 rounded-full font-medium text-lg border transition-all hover:bg-[#606c38]/5 ${isDark
-                                ? 'border-[#606c38]/50 text-[#a3b18a] hover:text-white hover:border-[#606c38]'
-                                : 'border-[#606c38]/30 text-[#606c38] hover:border-[#606c38]'
-                                }`}
-                        >
-                            Contact Me
-                        </a>
-                    </div>
-                </motion.div>
-            </div>
-
-            {/* Right: Full-height Image */}
+            {/* Desktop: Absolute Positioned Image Right (>= md only) */}
             <motion.div
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1.2, ease: "easeOut" }}
-                className="hidden md:block md:w-1/2 lg:w-[45%] relative h-screen sticky top-0"
+                className="hidden md:block absolute right-0 top-0 h-full w-1/2 lg:w-[45%]"
             >
                 <div className="absolute inset-0 overflow-hidden">
                     <img
-                        src="/ritam.jpg"
+                        src={themeImage}
                         alt="Ritam Pal"
                         className="w-full h-full object-cover object-center"
                     />
-                    {/* Gradient overlay for better text contrast - Steeper left, gradual right */}
+                    {/* Gradient overlay */}
                     <div className={`absolute inset-0 ${isDark
                         ? 'bg-gradient-to-r from-[#151515] via-[#151515]/30 to-transparent'
                         : 'bg-gradient-to-r from-[#f4f5f0] via-[#f4f5f0]/30 to-transparent'
@@ -353,8 +300,64 @@ const Hero = ({ isDark }) => {
                 </div>
             </motion.div>
 
-            {/* Scroll indicator */}
+            {/* Content Container - Centered to match Nav */}
+            <div className="md:absolute md:inset-0 pointer-events-none">
+                <div className="max-w-7xl mx-auto px-6 h-full flex items-center">
+                    {/* Left: Content Wrapper */}
+                    <div className="w-full md:w-1/2 lg:w-[55%] pointer-events-auto pt-8 md:pt-0 z-10 relative">
+                        {/* Background Glow */}
+                        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-3xl opacity-30 pointer-events-none ${isDark ? 'bg-[#606c38]/20' : 'bg-[#606c38]/10'}`} />
 
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1, ease: "easeOut" }}
+                            className="space-y-8 max-w-2xl relative"
+                        >
+                            <div className={`inline-flex items-center gap-3 px-4 py-2 rounded-full text-xs font-bold tracking-[0.2em] uppercase border ${isDark
+                                ? 'bg-[#606c38]/10 text-[#a3b18a] border-[#606c38]/20'
+                                : 'bg-[#606c38]/5 text-[#606c38] border-[#606c38]/10'
+                                }`}>
+                                <Atom size={14} /> Sociophysics Researcher
+                            </div>
+
+                            <h1 className={`text-5xl md:text-7xl lg:text-8xl font-serif font-bold leading-[0.9] tracking-tight ${isDark ? 'text-white' : 'text-[#283618]'
+                                }`}>
+                                Order out of <br />
+                                <span className={`italic ${isDark ? 'text-[#606c38]' : 'text-[#606c38]'}`}>
+                                    Chaos
+                                </span>
+                            </h1>
+
+                            <p className={`text-xl md:text-2xl leading-relaxed font-light max-w-lg ${isDark ? 'text-gray-300' : 'text-gray-600'
+                                }`}>
+                                {DATA.tagline} Using the tools of statistical physics to understand the "noise" of democracy and social networks.
+                            </p>
+
+                            <div className="flex flex-wrap gap-5 pt-4">
+                                <a
+                                    href="#research"
+                                    className={`px-10 py-4 rounded-full font-medium text-lg transition-all transform hover:scale-105 shadow-xl ${isDark
+                                        ? 'bg-[#606c38] text-white hover:bg-[#4d572d] shadow-[#606c38]/20'
+                                        : 'bg-[#606c38] text-white hover:bg-[#4d572d] shadow-[#606c38]/20'
+                                        }`}
+                                >
+                                    Explore Research
+                                </a>
+                                <a
+                                    href="#contact"
+                                    className={`px-10 py-4 rounded-full font-medium text-lg border transition-all hover:bg-[#606c38]/5 ${isDark
+                                        ? 'border-[#606c38]/50 text-[#a3b18a] hover:text-white hover:border-[#606c38]'
+                                        : 'border-[#606c38]/30 text-[#606c38] hover:border-[#606c38]'
+                                        }`}
+                                >
+                                    Contact Me
+                                </a>
+                            </div>
+                        </motion.div>
+                    </div>
+                </div>
+            </div>
         </section>
     );
 };
@@ -365,7 +368,7 @@ const About = ({ isDark }) => {
             {/* Subtle background element */}
             <div className={`absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-3xl opacity-20 pointer-events-none ${isDark ? 'bg-[#606c38]/20' : 'bg-[#606c38]/10'}`} />
 
-            <div className="max-w-5xl mx-auto relative z-10">
+            <div className="max-w-7xl mx-auto relative z-10">
                 <div className="space-y-12">
                     {/* Main Narrative - Full Width/Centered */}
                     <div>
@@ -475,7 +478,7 @@ const Research = ({ isDark }) => {
 const Publications = ({ isDark }) => {
     return (
         <section id="publications" className={`py-32 px-6 ${isDark ? 'bg-[#1e1e1e]' : 'bg-[#fcfdfa]'}`}>
-            <div className="max-w-5xl mx-auto">
+            <div className="max-w-7xl mx-auto">
                 <div className="mb-16 flex items-end justify-between border-b border-[#606c38]/20 pb-8">
                     <div>
                         <h2 className={`text-xs font-bold tracking-[0.2em] uppercase mb-4 ${isDark ? 'text-[#a3b18a]' : 'text-[#606c38]'}`}>
@@ -693,8 +696,22 @@ const ThemeToggle = ({ isDark, toggleTheme }) => {
 };
 
 export default function App() {
-    // Theme state
-    const [isDark, setIsDark] = useState(false);
+    // Theme state with persistence
+    const [isDark, setIsDark] = useState(() => {
+        if (typeof window !== 'undefined') {
+            const saved = localStorage.getItem('theme');
+            if (saved) {
+                return saved === 'dark';
+            }
+            return window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+        return false;
+    });
+
+    // Update theme and persist
+    useEffect(() => {
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }, [isDark]);
 
     // Toggle theme
     const toggleTheme = () => setIsDark(!isDark);
