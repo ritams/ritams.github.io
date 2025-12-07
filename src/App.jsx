@@ -302,7 +302,7 @@ const Hero = ({ isDark }) => {
 
             {/* Content Container - Centered to match Nav */}
             <div className="md:absolute md:inset-0 pointer-events-none">
-                <div className="max-w-7xl mx-auto px-6 h-full flex items-center">
+                <div className="max-w-7xl mx-auto px-6 xl:px-0 h-full flex items-center">
                     {/* Left: Content Wrapper */}
                     <div className="w-full md:w-1/2 lg:w-[55%] pointer-events-auto pt-8 md:pt-0 z-10 relative">
                         {/* Background Glow */}
