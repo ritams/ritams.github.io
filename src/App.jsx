@@ -3,7 +3,7 @@ import {
     Moon, Sun, Atom, Network, TrendingUp, BookOpen,
     Mail, ExternalLink, ChevronDown, FileText, Award,
     Cpu, Users, BarChart3, Linkedin, Twitter, Github, Instagram,
-    Copy, Check
+    Copy, Check, Menu, X
 } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 
@@ -170,7 +170,7 @@ const ParticleBackground = ({ isDark }) => {
 
 const NavBar = ({ isDark, toggleTheme }) => {
     const [scrolled, setScrolled] = useState(false);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -178,26 +178,16 @@ const NavBar = ({ isDark, toggleTheme }) => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Prevent scrolling when menu is open
-    useEffect(() => {
-        if (isMenuOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
-    }, [isMenuOpen]);
+    const navLinks = ['About', 'Research', 'Publications', 'Contact'];
 
     return (
-
-        <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isMenuOpen
-            ? (isDark ? 'bg-[#1a1a1a]' : 'bg-[#f4f5f0]') // Solid background when menu is open
-            : scrolled
-                ? (isDark ? 'bg-[#1a1a1a]/90 backdrop-blur-md border-b border-[#606c38]/20' : 'bg-white/90 backdrop-blur-md border-b border-[#606c38]/10')
-                : (isDark ? 'bg-[#1a1a1a]/70 backdrop-blur-sm' : 'bg-white/70 backdrop-blur-sm')
+        <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled || mobileMenuOpen
+            ? (isDark ? 'bg-[#1a1a1a]/90 backdrop-blur-md border-b border-[#606c38]/20' : 'bg-white/90 backdrop-blur-md border-b border-[#606c38]/10')
+            : (isDark ? 'bg-[#1a1a1a]/70 backdrop-blur-sm' : 'bg-white/70 backdrop-blur-sm')
             }`}>
             <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                 {/* Updated Title: Thin, Spaced Out */}
-                <a href="#hero" className="text-xl md:text-2xl font-light tracking-[0.3em] uppercase relative z-50 cursor-pointer block hover:opacity-80 transition-opacity">
+                <a href="#hero" className="text-xl md:text-2xl font-light tracking-[0.3em] uppercase relative z-50 cursor-pointer block hover:opacity-80 transition-opacity" onClick={() => setMobileMenuOpen(false)}>
                     <span className={isDark ? 'text-white' : 'text-[#283618]'}>Ritam</span>
                     <span className="text-[#606c38] ml-3">Pal</span>
                 </a>
@@ -205,7 +195,7 @@ const NavBar = ({ isDark, toggleTheme }) => {
                 <div className="flex items-center gap-6">
                     {/* Desktop Menu */}
                     <div className="hidden md:flex gap-8 text-xs font-light tracking-[0.2em] uppercase">
-                        {['About', 'Research', 'Publications', 'Contact'].map((item) => (
+                        {navLinks.map((item) => (
                             <a
                                 key={item}
                                 href={`#${item.toLowerCase()}`}
@@ -216,39 +206,38 @@ const NavBar = ({ isDark, toggleTheme }) => {
                         ))}
                     </div>
 
-                    {/* Mobile Menu Button */}
+                    {/* Mobile Menu Toggle */}
                     <button
-                        className="md:hidden relative z-50 p-2"
-                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className="md:hidden z-50 p-2"
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                     >
-                        <div className={`w-6 h-0.5 mb-1.5 transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''} ${isDark ? 'bg-white' : 'bg-[#283618]'}`}></div>
-                        <div className={`w-6 h-0.5 mb-1.5 transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''} ${isDark ? 'bg-white' : 'bg-[#283618]'}`}></div>
-                        <div className={`w-6 h-0.5 transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''} ${isDark ? 'bg-white' : 'bg-[#283618]'}`}></div>
+                        {mobileMenuOpen ? (
+                            <X className={`w-6 h-6 ${isDark ? 'text-white' : 'text-[#283618]'}`} />
+                        ) : (
+                            <Menu className={`w-6 h-6 ${isDark ? 'text-white' : 'text-[#283618]'}`} />
+                        )}
                     </button>
                 </div>
             </div>
 
-            {/* Mobile Menu Overlay */}
+            {/* Mobile Menu Expansion */}
             <AnimatePresence>
-                {isMenuOpen && (
+                {mobileMenuOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.2 }}
-                        className={`fixed inset-0 z-40 flex flex-col items-center justify-center ${isDark ? 'bg-[#1a1a1a]' : 'bg-[#f4f5f0]'
-                            }`}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="md:hidden overflow-hidden border-t border-[#606c38]/10"
                     >
-                        {/* Decorative background element for menu */}
-                        <div className={`absolute top-0 right-0 w-[300px] h-[300px] rounded-full blur-3xl opacity-20 pointer-events-none ${isDark ? 'bg-[#606c38]/30' : 'bg-[#606c38]/20'}`} />
-
-                        <div className="flex flex-col items-center gap-12">
-                            {['About', 'Research', 'Publications', 'Contact'].map((item) => (
+                        <div className="flex flex-col items-end justify-center py-8 px-6 gap-6">
+                            {navLinks.map((item) => (
                                 <a
                                     key={item}
                                     href={`#${item.toLowerCase()}`}
-                                    onClick={() => setIsMenuOpen(false)}
-                                    className={`text-4xl font-serif font-bold tracking-wide transition-colors ${isDark ? 'text-white hover:text-[#a3b18a]' : 'text-[#283618] hover:text-[#606c38]'}`}
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className={`text-lg font-light tracking-[0.2em] uppercase ${isDark ? 'text-gray-200' : 'text-[#283618]'
+                                        }`}
                                 >
                                     {item}
                                 </a>
