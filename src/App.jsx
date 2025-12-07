@@ -309,7 +309,7 @@ const Hero = ({ isDark }) => {
             <div className="md:absolute md:inset-0 pointer-events-none">
                 <div className="max-w-7xl mx-auto px-6 xl:px-0 h-full flex items-center">
                     {/* Left: Content Wrapper */}
-                    <div className="w-full md:w-1/2 lg:w-[55%] pointer-events-auto pt-8 md:pt-0 z-10 relative">
+                    <div className="w-full md:w-1/2 lg:w-[55%] pointer-events-auto pt-8 md:pt-0 z-10 relative pb-12 md:pb-0">
                         {/* Background Glow */}
                         <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-3xl opacity-30 pointer-events-none ${isDark ? 'bg-[#606c38]/20' : 'bg-[#606c38]/10'}`} />
 
@@ -317,16 +317,16 @@ const Hero = ({ isDark }) => {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, ease: "easeOut" }}
-                            className="space-y-10 max-w-2xl relative"
+                            className="max-w-2xl relative"
                         >
-                            <div className={`text-xs font-bold tracking-[0.2em] uppercase mb-6 inline-block ${isDark
+                            <div className={`text-xs font-bold tracking-[0.2em] uppercase mb-3 inline-block ${isDark
                                 ? 'text-[#a3b18a]'
                                 : 'text-[#606c38]'
                                 }`}>
                                 <span className="border-b border-current pb-1">Sociophysics Researcher</span>
                             </div>
 
-                            <h1 className={`text-6xl md:text-8xl font-serif font-medium leading-[0.95] tracking-tight ${isDark ? 'text-white' : 'text-[#283618]'
+                            <h1 className={`text-6xl md:text-8xl font-serif font-medium leading-[0.95] tracking-tight mb-6 ${isDark ? 'text-white' : 'text-[#283618]'
                                 }`}>
                                 Order out of <br />
                                 <span className={`italic font-light ${isDark ? 'text-[#606c38]' : 'text-[#606c38]'}`}>
@@ -334,7 +334,7 @@ const Hero = ({ isDark }) => {
                                 </span>
                             </h1>
 
-                            <p className={`text-xl md:text-2xl leading-relaxed font-light max-w-lg ${isDark ? 'text-gray-300' : 'text-gray-600'
+                            <p className={`text-xl md:text-2xl leading-relaxed font-light max-w-lg mb-8 ${isDark ? 'text-gray-300' : 'text-gray-600'
                                 }`}>
                                 {DATA.tagline} Using the tools of statistical physics to understand the "noise" of democracy and social networks.
                             </p>
@@ -369,7 +369,7 @@ const Hero = ({ isDark }) => {
 
 const About = ({ isDark }) => {
     return (
-        <section id="about" className={`py-32 px-6 relative overflow-hidden ${isDark ? 'bg-[#1e1e1e]' : 'bg-[#fcfdfa]'}`}>
+        <section id="about" className={`py-16 md:py-32 px-6 relative overflow-hidden ${isDark ? 'bg-[#1e1e1e]' : 'bg-[#fcfdfa]'}`}>
             {/* Subtle background element */}
             <div className={`absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-3xl opacity-20 pointer-events-none ${isDark ? 'bg-[#606c38]/20' : 'bg-[#606c38]/10'}`} />
 
@@ -417,7 +417,7 @@ const About = ({ isDark }) => {
 
 const Research = ({ isDark }) => {
     return (
-        <section id="research" className="py-32 px-6 relative z-10">
+        <section id="research" className="py-16 md:py-32 px-6 relative z-10">
             <div className="max-w-7xl mx-auto">
                 <div className="text-left md:text-center mb-20">
                     <h2 className={`text-xs font-bold tracking-[0.2em] uppercase mb-6 inline-block ${isDark ? 'text-[#a3b18a]' : 'text-[#606c38]'}`}>
@@ -487,7 +487,7 @@ const Research = ({ isDark }) => {
 
 const Publications = ({ isDark }) => {
     return (
-        <section id="publications" className={`py-32 px-6 ${isDark ? 'bg-[#1e1e1e]' : 'bg-[#fcfdfa]'}`}>
+        <section id="publications" className={`py-16 md:py-32 px-6 ${isDark ? 'bg-[#1e1e1e]' : 'bg-[#fcfdfa]'}`}>
             <div className="max-w-7xl mx-auto">
                 <div className="mb-16 flex items-end justify-between border-b border-[#606c38]/20 pb-8">
                     <div>
@@ -595,7 +595,7 @@ const Footer = ({ isDark }) => {
     ];
 
     return (
-        <footer id="contact" className={`relative py-32 px-6 overflow-hidden ${isDark ? 'bg-[#151515] text-[#f4f5f0]' : 'bg-[#f4f5f0] text-[#1a1a1a]'}`}>
+        <footer id="contact" className={`relative py-16 md:py-32 px-6 overflow-hidden ${isDark ? 'bg-[#151515] text-[#f4f5f0]' : 'bg-[#f4f5f0] text-[#1a1a1a]'}`}>
             {/* Decorative Background */}
             <div className={`absolute inset-0 opacity-50 pointer-events-none ${isDark
                 ? 'bg-[radial-gradient(circle_at_50%_100%,rgba(96,108,56,0.15),transparent_50%)]'
