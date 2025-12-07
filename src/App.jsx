@@ -26,21 +26,18 @@ const DATA = {
         {
             id: 1,
             title: "The Random Voting Model (RVM)",
-            icon: <Atom className="w-6 h-6" />,
             desc: "Challenging conventional political science, we developed a parameter-free analytical framework. It proves that despite microscopic complexities, democratic elections exhibit robust, macroscopic universalities.",
             impact: "Predicts electoral competitiveness across diverse scales."
         },
         {
             id: 2,
             title: "Universality in Elections",
-            icon: <BarChart3 className="w-6 h-6" />,
             desc: "Our analysis of 34 nations reveals that voter turnout and margins are inherently correlated. Crucially, we show that a scaled ratio of margin and turnout exhibits a robust universal distribution across diverse democratic systems.",
             impact: "Universality acts as a diagnostic tool to flag large-scale electoral malpractice."
         },
         {
             id: 3,
             title: "Depolarizing Social Networks",
-            icon: <Network className="w-6 h-6" />,
             desc: "Investigating the physics of echo chambers. We propose 'random nudges'—stochastic noise—as a mechanism to destabilize extreme consensus and foster social cohesion.",
             impact: "A proof of concept solution to online polarization."
         }
@@ -441,38 +438,44 @@ const Research = ({ isDark }) => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: idx * 0.1 }}
-                            whileHover={{ y: -10 }}
-                            className={`group relative p-6 md:p-10 rounded-[2rem] border transition-all duration-500 ${isDark
+                            whileHover={{ y: -5 }}
+                            className={`group relative p-8 md:p-10 rounded-[2rem] border transition-all duration-500 overflow-hidden flex flex-col justify-between h-full ${isDark
                                 ? 'bg-[#1a1a1a] border-[#333] hover:border-[#606c38]/50 hover:bg-[#222]'
                                 : 'bg-white border-gray-100 hover:border-[#606c38]/30 hover:shadow-xl hover:shadow-[#606c38]/5'
                                 }`}
                         >
-                            {/* Number watermark */}
-                            <div className={`absolute top-6 right-8 text-6xl font-serif font-bold opacity-5 pointer-events-none ${isDark ? 'text-white' : 'text-[#283618]'}`}>
+                            {/* Artistic Background Number */}
+                            <div className={`absolute -top-6 -right-6 text-[120px] leading-none font-serif font-bold opacity-[0.03] select-none transition-transform duration-700 group-hover:scale-110 group-hover:opacity-[0.06] ${isDark ? 'text-white' : 'text-[#283618]'
+                                }`}>
                                 0{item.id}
                             </div>
 
-                            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-8 transition-colors duration-500 ${isDark
-                                ? 'bg-[#283618] text-[#a3b18a] group-hover:bg-[#606c38] group-hover:text-white'
-                                : 'bg-[#f4f5f0] text-[#606c38] group-hover:bg-[#606c38] group-hover:text-white'
-                                }`}>
-                                {item.icon}
+                            <div className="relative z-10">
+                                <span className={`inline-block text-xs font-bold tracking-[0.2em] uppercase mb-4 ${isDark ? 'text-[#606c38]' : 'text-[#606c38]'
+                                    }`}>
+                                    0{item.id}
+                                </span>
+
+                                <h4 className={`text-2xl md:text-3xl font-serif font-bold mb-6 ${isDark ? 'text-white' : 'text-[#283618]'
+                                    }`}>
+                                    {item.title}
+                                </h4>
+
+                                <p className={`text-base leading-relaxed mb-8 ${isDark ? 'text-gray-400' : 'text-gray-600'
+                                    }`}>
+                                    {item.desc}
+                                </p>
                             </div>
 
-                            <h4 className={`text-2xl font-bold mb-4 pr-8 ${isDark ? 'text-white' : 'text-[#283618]'}`}>
-                                {item.title}
-                            </h4>
-
-                            <p className={`text-base leading-relaxed mb-8 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                                {item.desc}
-                            </p>
-
-                            <div className={`pt-6 border-t ${isDark ? 'border-[#333]' : 'border-gray-100'}`}>
-                                <div className={`text-[10px] font-bold uppercase tracking-widest mb-2 ${isDark ? 'text-[#606c38]' : 'text-[#a3b18a]'}`}>
+                            <div className={`relative z-10 pt-6 mt-auto border-t ${isDark ? 'border-[#333]' : 'border-gray-100'
+                                }`}>
+                                <div className={`text-[10px] font-bold uppercase tracking-widest mb-2 ${isDark ? 'text-[#a3b18a]' : 'text-[#4d572d]'
+                                    }`}>
                                     Key Impact
                                 </div>
-                                <div className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-[#4d572d]'}`}>
-                                    {item.impact}
+                                <div className={`text-sm font-medium italic ${isDark ? 'text-gray-300' : 'text-[#283618]'
+                                    }`}>
+                                    "{item.impact}"
                                 </div>
                             </div>
                         </motion.div>
