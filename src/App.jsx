@@ -344,7 +344,7 @@ const Hero = ({ isDark }) => {
                                     href="#research"
                                     className={`group px-8 py-3 rounded-full text-sm font-medium tracking-widest uppercase transition-all duration-300 ${isDark
                                         ? 'bg-[#f4f5f0] text-[#151515] hover:bg-[#606c38] hover:text-white'
-                                        : 'bg-[#151515] text-[#f4f5f0] hover:bg-[#606c38] hover:text-white'
+                                        : 'bg-[#283618] text-[#f4f5f0] hover:bg-[#606c38] hover:text-white'
                                         }`}
                                 >
                                     Explore Research
