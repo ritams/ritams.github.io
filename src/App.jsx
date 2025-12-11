@@ -268,6 +268,9 @@ const NavBar = ({ isDark, toggleTheme }) => {
 
 const Hero = ({ isDark }) => {
     const themeImage = isDark ? "/ritam-darkmode.jpg" : "/ritam-lightmode.jpg";
+    const { scrollY } = useScroll();
+    const y = useTransform(scrollY, [0, 500], [0, 200]); // Adjust values for desired parallax strength
+
     return (
         <section id="hero" className="relative min-h-screen overflow-hidden">
             {/* Mobile: Full-width Image at Top (< md only) */}
@@ -288,6 +291,7 @@ const Hero = ({ isDark }) => {
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1.2, ease: "easeOut" }}
+                style={{ y }}
                 className="hidden md:block absolute right-0 top-0 h-full w-1/2 lg:w-[45%]"
             >
                 <div className="absolute inset-0 overflow-hidden">
