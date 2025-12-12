@@ -8,6 +8,7 @@ import {
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 
 // --- Assets & Data ---
+import SEO from './components/SEO';
 
 const DATA = {
     name: "Ritam Pal",
@@ -747,6 +748,7 @@ export default function App() {
 
     return (
         <div className={`min-h-screen transition-colors duration-500 ${isDark ? 'bg-[#151515]' : 'bg-[#f4f5f0]'}`}>
+            <SEO />
             <ParticleBackground isDark={isDark} />
 
             <div className="relative z-10">
