@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import {
     Moon, Sun, Atom, Network, TrendingUp, BookOpen,
@@ -8,7 +10,6 @@ import {
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 
 // --- Assets & Data ---
-import SEO from './components/SEO';
 
 const DATA = {
     name: "Ritam Pal",
@@ -77,15 +78,24 @@ const DATA = {
 
 // --- Components ---
 
-const ParticleBackground = ({ isDark }) => {
-    const canvasRef = useRef(null);
+const ParticleBackground = ({ isDark }: { isDark: boolean }) => {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
+        if (!canvas) return;
         const ctx = canvas.getContext('2d');
-        let animationFrameId;
-        let width, height;
-        let particles = [];
+        if (!ctx) return;
+        let animationFrameId: number;
+        let width: number, height: number;
+        let particles: Array<{
+            x: number;
+            y: number;
+            vx: number;
+            vy: number;
+            size: number;
+            alpha: number;
+        }> = [];
 
         const init = () => {
             width = window.innerWidth;
@@ -166,7 +176,7 @@ const ParticleBackground = ({ isDark }) => {
     );
 };
 
-const NavBar = ({ isDark, toggleTheme }) => {
+const NavBar = ({ isDark }: { isDark: boolean }) => {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -178,7 +188,7 @@ const NavBar = ({ isDark, toggleTheme }) => {
 
     const navLinks = ['About', 'Research', 'Publications', 'Contact'];
 
-    const handleMobileNavClick = (e, targetId) => {
+    const handleMobileNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
         e.preventDefault();
         setMobileMenuOpen(false);
 
@@ -267,7 +277,7 @@ const NavBar = ({ isDark, toggleTheme }) => {
     );
 };
 
-const Hero = ({ isDark }) => {
+const Hero = ({ isDark }: { isDark: boolean }) => {
     const themeImage = isDark ? "/ritam-darkmode.jpg" : "/ritam-lightmode.jpg";
     const { scrollY } = useScroll();
     const y = useTransform(scrollY, [0, 500], [0, 200]); // Adjust values for desired parallax strength
@@ -372,7 +382,7 @@ const Hero = ({ isDark }) => {
     );
 };
 
-const About = ({ isDark }) => {
+const About = ({ isDark }: { isDark: boolean }) => {
     return (
         <section id="about" className={`py-16 md:py-32 px-6 relative overflow-hidden ${isDark ? 'bg-[#1e1e1e]' : 'bg-[#fcfdfa]'}`}>
             {/* Subtle background element */}
@@ -420,7 +430,7 @@ const About = ({ isDark }) => {
     );
 };
 
-const Research = ({ isDark }) => {
+const Research = ({ isDark }: { isDark: boolean }) => {
     return (
         <section id="research" className="py-16 md:py-32 px-6 relative z-10">
             <div className="max-w-7xl mx-auto">
@@ -490,7 +500,7 @@ const Research = ({ isDark }) => {
     );
 };
 
-const Publications = ({ isDark }) => {
+const Publications = ({ isDark }: { isDark: boolean }) => {
     return (
         <section id="publications" className={`py-16 md:py-32 px-6 ${isDark ? 'bg-[#1e1e1e]' : 'bg-[#fcfdfa]'}`}>
             <div className="max-w-7xl mx-auto">
@@ -567,7 +577,7 @@ const SocialIcons = {
             <path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" />
         </svg>
     ),
-    ResearchGate: ({ isDark }) => (
+    ResearchGate: ({ isDark }: { isDark: boolean }) => (
         <svg viewBox="0 0 32 32" className="w-5 h-5 transition-opacity opacity-80 hover:opacity-100">
             <path
                 d="M32.04 15.97c0,8.85 -7.18,16.03 -16.02,16.03 -8.85,0 -16.02,-7.18 -16.02,-16.03 0,-8.85 7.17,-16.03 16.02,-16.03 8.84,0 16.02,7.18 16.02,16.03zm-14.79 7c-1.43,-0.28 -2.28,-1.11 -4.45,-4.33 -0.72,-1.08 -0.72,-1.08 -1.42,-1.13 -1.03,-0.07 -0.95,-0.25 -0.92,2.02 0.04,2.58 0.01,2.52 1.5,2.77 0.39,0.06 0.42,0.09 0.42,0.32 0,0.26 0,0.26 -2.62,0.28 -2.46,0.02 -2.62,0.01 -2.67,-0.14 -0.1,-0.29 0.05,-0.43 0.59,-0.53 0.61,-0.11 0.93,-0.36 1.01,-0.78 0.04,-0.16 0.05,-2.32 0.03,-4.8 -0.03,-5.21 0.03,-4.9 -0.93,-5.11 -0.6,-0.13 -0.79,-0.27 -0.71,-0.51 0.06,-0.16 0.19,-0.17 2.92,-0.22 4.06,-0.08 4.82,0.05 5.9,1.01 1.13,1.01 1.29,2.55 0.39,3.84 -0.4,0.58 -1.2,1.2 -1.82,1.43 -0.29,0.11 -0.53,0.23 -0.53,0.27 0,0.12 0.92,1.43 1.49,2.13 1.52,1.85 2.34,2.57 3.19,2.79 0.53,0.14 0.68,0.29 0.53,0.55 -0.16,0.27 -0.96,0.33 -1.9,0.14zm-3.83 -6.63c2,-0.82 2.15,-3.57 0.25,-4.38 -0.49,-0.21 -0.62,-0.22 -1.85,-0.22 -1.33,0 -1.33,0 -1.35,2.31 -0.02,1.27 -0.01,2.37 0.02,2.43 0.09,0.21 2.34,0.1 2.93,-0.14zm6.97 -2.85c-1.55,-0.29 -2.06,-1.24 -1.98,-3.68 0.04,-1.35 0.15,-1.72 0.67,-2.28 0.92,-0.99 3.2,-0.9 4.04,0.16 0.36,0.45 0.33,0.59 -0.17,0.74 -0.39,0.13 -0.39,0.13 -0.75,-0.23 -0.85,-0.82 -2.32,-0.52 -2.58,0.54 -0.13,0.47 -0.12,2.46 0.01,2.91 0.35,1.27 2.46,1.27 2.82,0 0.22,-0.81 0.17,-0.87 -0.8,-0.92 -0.47,-0.02 -0.47,-0.02 -0.47,-0.41 0,-0.38 0,-0.38 1.12,-0.41 1.45,-0.03 1.43,-0.05 1.36,1.01 -0.09,1.33 -0.45,1.97 -1.32,2.35 -0.57,0.24 -1.35,0.33 -1.95,0.22z"
@@ -579,7 +589,7 @@ const SocialIcons = {
             />
         </svg>
     ),
-    Orcid: ({ isDark }) => (
+    Orcid: ({ isDark }: { isDark: boolean }) => (
         <svg viewBox="0 0 256 256" className="w-5 h-5 transition-opacity opacity-80 hover:opacity-100">
             <path
                 d="M256,128c0,70.7-57.3,128-128,128C57.3,256,0,198.7,0,128C0,57.3,57.3,0,128,0C198.7,0,256,57.3,256,128z"
@@ -594,7 +604,7 @@ const SocialIcons = {
     )
 };
 
-const Footer = ({ isDark }) => {
+const Footer = ({ isDark }: { isDark: boolean }) => {
     const [copied, setCopied] = useState(false);
     const email = "ritam.pal@students.iiserpune.ac.in";
 
@@ -691,7 +701,7 @@ const Footer = ({ isDark }) => {
     );
 };
 
-const ThemeToggle = ({ isDark, toggleTheme }) => {
+const ThemeToggle = ({ isDark, toggleTheme }: { isDark: boolean; toggleTheme: () => void }) => {
     return (
         <motion.button
             onClick={toggleTheme}
@@ -725,30 +735,43 @@ const ThemeToggle = ({ isDark, toggleTheme }) => {
     );
 };
 
-export default function App() {
+export default function Portfolio() {
     // Theme state with persistence
-    const [isDark, setIsDark] = useState(() => {
-        if (typeof window !== 'undefined') {
-            const saved = localStorage.getItem('theme');
-            if (saved) {
-                return saved === 'dark';
-            }
-            return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const [isDark, setIsDark] = useState(true);
+    const [mounted, setMounted] = useState(false);
+
+    // Hydration fix - only run on client
+    useEffect(() => {
+        setMounted(true);
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+            setIsDark(saved === 'dark');
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            setIsDark(true);
         }
-        return false;
-    });
+    }, []);
 
     // Update theme and persist
     useEffect(() => {
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    }, [isDark]);
+        if (mounted) {
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+    }, [isDark, mounted]);
 
     // Toggle theme
     const toggleTheme = () => setIsDark(!isDark);
 
+    // Prevent hydration mismatch
+    if (!mounted) {
+        return (
+            <div className="min-h-screen bg-[#151515]">
+                <div className="animate-pulse" />
+            </div>
+        );
+    }
+
     return (
         <div className={`min-h-screen transition-colors duration-500 ${isDark ? 'bg-[#151515]' : 'bg-[#f4f5f0]'}`}>
-            <SEO />
             <ParticleBackground isDark={isDark} />
 
             <div className="relative z-10">
@@ -761,9 +784,7 @@ export default function App() {
             </div>
 
             {/* Floating Theme Toggle */}
-            {/* Floating Theme Toggle */}
             <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
         </div>
     );
 }
-

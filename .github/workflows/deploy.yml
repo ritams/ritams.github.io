@@ -1,4 +1,4 @@
-# Deploy to GitHub Pages using Vite
+# Deploy to GitHub Pages using Next.js Static Export
 name: Deploy to GitHub Pages
 
 on:
@@ -40,7 +40,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: './out'
 
   deploy:
     environment:
