@@ -121,8 +121,8 @@ const exploreCards = [
 export default function HomePage() {
   return (
     <PageWrapper>
-      {/* Hero — text aligned to nav, photo fills to right edge */}
-      <section className="relative min-h-[calc(100vh-3.5rem)] grid md:grid-cols-2">
+      {/* Hero — text aligned to nav, photo fills to right edge, extends behind nav */}
+      <section className="relative min-h-screen -mt-14 pt-0 grid md:grid-cols-2">
         {/* Text — left side, content aligned to nav width */}
         <div className="relative flex items-center justify-end py-20 md:py-0">
           {/* Constellation background on text side */}
