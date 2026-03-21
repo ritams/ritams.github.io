@@ -112,10 +112,10 @@ function ConstellationCanvas() {
 }
 
 const exploreCards = [
-  { href: '/work', label: 'Work', desc: 'What I build' },
-  { href: '/research', label: 'Research', desc: 'What I proved' },
-  { href: '/writing', label: 'Writing', desc: 'What I think' },
-  { href: '/photos', label: 'Photos', desc: 'What I see' },
+  { href: '/work', label: 'Work', tags: 'AI · Startups · Engineering' },
+  { href: '/research', label: 'Research', tags: 'Physics · Elections · Universality' },
+  { href: '/writing', label: 'Writing', tags: 'Essays · Thoughts · Words' },
+  { href: '/photos', label: 'Photos', tags: 'Moments · Places · Light' },
 ];
 
 export default function HomePage() {
@@ -123,8 +123,8 @@ export default function HomePage() {
     <PageWrapper>
       {/* Hero — text left, photo fills right to viewport edge, extends behind nav */}
       <section className="relative min-h-screen -mt-14 pt-0 grid md:grid-cols-[55%_45%]">
-        {/* Text — left side */}
-        <div className="relative flex items-center py-20 md:py-0">
+        {/* Text — left side, pt-14 clears the nav */}
+        <div className="relative flex items-center py-20 md:pt-20 md:pb-16">
           {/* Constellation background on text side */}
           <div className="absolute inset-0 overflow-hidden">
             <ConstellationCanvas />
@@ -239,9 +239,10 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* Numbered explore cards */}
-      <section className="max-w-5xl mx-auto px-6 pb-24">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {/* Explore cards — barnali-style grid */}
+      <section className="max-w-5xl mx-auto px-6 py-16">
+        <p className="text-xs uppercase tracking-widest text-neutral-400 mb-8">Explore</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-neutral-200">
           {exploreCards.map((item, i) => (
             <motion.div
               key={item.href}
@@ -251,16 +252,19 @@ export default function HomePage() {
             >
               <Link
                 href={item.href}
-                className="block p-6 rounded-lg bg-[#f5f5f5] hover:bg-[#eeeeee] transition-colors group"
+                className="block bg-[#fafafa] hover:bg-white p-8 h-full transition-colors group border-l-2 border-l-transparent hover:border-l-terracotta"
               >
-                <span className="text-xs font-medium text-terracotta tracking-wider">
+                <span className="text-xs text-neutral-300 font-light">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <h3 className="mt-3 text-sm font-semibold text-[#1a1a1a] group-hover:text-terracotta transition-colors">
+                <h3 className="mt-4 text-lg font-semibold text-[#1a1a1a] group-hover:text-terracotta transition-colors">
                   {item.label}
                 </h3>
-                <p className="mt-1 text-xs text-[#4a4a4a]">
-                  {item.desc}
+                <p className="mt-2 text-xs text-neutral-400">
+                  {item.tags}
+                </p>
+                <p className="mt-6 text-xs font-medium text-neutral-400 group-hover:text-terracotta transition-colors flex items-center gap-1">
+                  ENTER <ArrowRight size={10} />
                 </p>
               </Link>
             </motion.div>
