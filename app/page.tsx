@@ -122,7 +122,7 @@ export default function HomePage() {
   return (
     <PageWrapper>
       {/* Hero — text left, photo fills right to viewport edge, extends behind nav */}
-      <section className="relative min-h-screen -mt-14 pt-0 grid md:grid-cols-[1fr_1fr]">
+      <section className="relative min-h-screen -mt-14 pt-0 grid md:grid-cols-[55%_45%]">
         {/* Text — left side */}
         <div className="relative flex items-center py-20 md:py-0">
           {/* Constellation background on text side */}
