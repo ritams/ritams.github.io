@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Mail, Github, Twitter, Instagram, Linkedin, BookOpen } from 'lucide-react';
+import { useState } from 'react';
+import { Mail, Github, Twitter, Instagram, Linkedin, BookOpen, Copy, Check } from 'lucide-react';
 import PageWrapper from '@/components/PageWrapper';
 import { siteConfig } from '@/lib/data';
 
@@ -13,6 +14,25 @@ const socialLinks = [
   { href: siteConfig.social.linkedin, icon: Linkedin, label: 'LinkedIn' },
   { href: siteConfig.social.scholar, icon: BookOpen, label: 'Google Scholar' },
 ];
+
+function CopyEmail() {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(siteConfig.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <button
+      onClick={handleCopy}
+      className="ml-2 p-1 rounded text-neutral-400 hover:text-terracotta transition-colors"
+      aria-label="Copy email"
+      title="Copy email"
+    >
+      {copied ? <Check size={13} className="text-terracotta" /> : <Copy size={13} />}
+    </button>
+  );
+}
 
 export default function AboutPage() {
   return (
@@ -149,13 +169,15 @@ export default function AboutPage() {
           <p className="mt-3 text-sm text-[#4a4a4a]">
             Want to collaborate, chat about research, or just say hi?
           </p>
-          <a
-            href={`mailto:${siteConfig.email}`}
-            className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 bg-terracotta text-white text-sm rounded-md hover:bg-terracotta-dark transition-colors"
-          >
-            <Mail size={14} />
-            {siteConfig.email}
-          </a>
+          <div className="mt-4 flex items-center gap-1">
+            <a
+              href={`mailto:${siteConfig.email}`}
+              className="text-sm text-terracotta hover:underline"
+            >
+              {siteConfig.email}
+            </a>
+            <CopyEmail />
+          </div>
         </motion.div>
       </div>
     </PageWrapper>

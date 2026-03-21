@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Mail, BookOpen } from 'lucide-react';
 import PageWrapper from '@/components/PageWrapper';
 
 // A minimal generative art element — slowly drifting connected dots
@@ -121,118 +121,88 @@ const exploreCards = [
 export default function HomePage() {
   return (
     <PageWrapper>
-      {/* Hero — text left, photo fills right to viewport edge, extends behind nav */}
-      <section className="relative min-h-screen -mt-14 pt-0 grid md:grid-cols-[55%_45%]">
-        {/* Text — left side, pt-14 clears the nav */}
-        <div className="relative flex items-center py-20 md:pt-20 md:pb-16">
-          {/* Constellation background on text side */}
-          <div className="absolute inset-0 overflow-hidden">
-            <ConstellationCanvas />
-          </div>
-
-            <div className="relative z-10 max-w-lg px-6 md:px-12 lg:pl-[max(1.5rem,calc((100vw-64rem)/2+1.5rem))] lg:pr-12">
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-5xl md:text-7xl font-bold tracking-tight text-[#1a1a1a] leading-[1.1]"
-              >
-                Ritam Pal
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="mt-4 text-sm text-[#4a4a4a] tracking-widest uppercase"
-              >
-                AI Researcher &middot; Physicist &middot; Builder
-              </motion.p>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="mt-6 text-base md:text-lg text-[#3a3a3a] leading-relaxed"
-              >
-                Asking dumb questions about statistical physics, elections,
-                AI, and everything in between. Sometimes the answers
-                turn into papers, sometimes into products, sometimes into
-                nothing at all.
-              </motion.p>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.48 }}
-                className="mt-4 text-sm text-neutral-400 italic"
-              >
-                Lost in life.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.55 }}
-                className="mt-8 flex flex-wrap gap-4"
-              >
-                <Link
-                  href="/work"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-terracotta text-white text-sm rounded-md hover:bg-terracotta-dark transition-colors"
-                >
-                  See my work <ArrowRight size={14} />
-                </Link>
-                <Link
-                  href="/about#contact"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 border border-neutral-300 text-sm rounded-md text-[#4a4a4a] hover:border-terracotta hover:text-terracotta transition-colors"
-                >
-                  Get in touch
-                </Link>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.7 }}
-                className="mt-6 flex items-center gap-4 text-xs text-neutral-400"
-              >
-                <span>Research Lead at <span className="text-terracotta">Conscious Engines</span></span>
-                <span>&middot;</span>
-                <span>Founder of <span className="text-terracotta">untitled.life</span></span>
-              </motion.div>
-            </div>
-          </div>
-
-          {/* Photo — fills entire right half to viewport edge */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            className="relative hidden md:block"
-          >
-            <Image
-              src="/ritam-silhouette.jpg"
-              alt="Ritam Pal"
-              fill
-              className="object-cover object-center"
-              priority
-            />
-            {/* Gradient fade from left (text side) into photo */}
-            <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#fafafa] to-transparent" />
-          </motion.div>
-
-        {/* Mobile: show photo as banner, tight crop */}
+      {/* Hero — barnali-style: photo left, name + tagline right, minimal */}
+      <section className="relative min-h-screen -mt-14 pt-0 grid md:grid-cols-2">
+        {/* Photo — fills left half, bleeds behind nav */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
-          className="md:hidden -order-1 absolute top-0 left-0 right-0 h-44 overflow-hidden"
+          className="relative hidden md:block order-2"
         >
           <Image
             src="/ritam-silhouette.jpg"
             alt="Ritam Pal"
             fill
-            className="object-cover object-top scale-125"
+            className="object-cover object-center"
+            priority
+          />
+          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#fafafa] to-transparent" />
+        </motion.div>
+
+        {/* Text — right side, like barnali: just name, tagline, contact */}
+        <div className="relative flex items-center order-1 md:order-1">
+          <div className="absolute inset-0 overflow-hidden">
+            <ConstellationCanvas />
+          </div>
+
+          <div className="relative z-10 px-6 md:px-16 py-32 md:py-0">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-6xl md:text-8xl font-bold tracking-tight text-[#1a1a1a] leading-[1.05]"
+            >
+              Ritam<br />Pal
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.35 }}
+              className="mt-6 text-xs text-[#4a4a4a] tracking-[0.2em] uppercase"
+            >
+              AI Researcher &middot; Physicist &middot; Builder
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="mt-10 space-y-2"
+            >
+              <a
+                href="mailto:ritam@untitled.life"
+                className="flex items-center gap-2 text-sm text-[#4a4a4a] hover:text-terracotta transition-colors"
+              >
+                <Mail size={14} />
+                ritam@untitled.life
+              </a>
+              <a
+                href="https://scholar.google.com/citations?user=9_ndyPcAAAAJ&hl=en"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sm text-[#4a4a4a] hover:text-terracotta transition-colors"
+              >
+                <BookOpen size={14} />
+                Google Scholar
+              </a>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Mobile: photo as tight banner */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="md:hidden order-first relative h-48 overflow-hidden"
+        >
+          <Image
+            src="/ritam-silhouette.jpg"
+            alt="Ritam Pal"
+            fill
+            className="object-cover object-top scale-110"
             priority
           />
           <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#fafafa] to-transparent" />
