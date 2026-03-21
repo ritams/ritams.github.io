@@ -121,17 +121,16 @@ const exploreCards = [
 export default function HomePage() {
   return (
     <PageWrapper>
-      {/* Hero — constrained to nav width */}
-      <section className="relative min-h-[calc(100vh-3.5rem)]">
-        <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-0 min-h-[calc(100vh-3.5rem)]">
-          {/* Text — left side */}
-          <div className="relative flex items-center py-20 md:py-0 pr-8">
-            {/* Constellation background on text side */}
-            <div className="absolute inset-0 overflow-hidden">
-              <ConstellationCanvas />
-            </div>
+      {/* Hero — text aligned to nav, photo fills to right edge */}
+      <section className="relative min-h-[calc(100vh-3.5rem)] grid md:grid-cols-2">
+        {/* Text — left side, content aligned to nav width */}
+        <div className="relative flex items-center justify-end py-20 md:py-0">
+          {/* Constellation background on text side */}
+          <div className="absolute inset-0 overflow-hidden">
+            <ConstellationCanvas />
+          </div>
 
-            <div className="relative z-10 max-w-md">
+            <div className="relative z-10 max-w-md pl-6 pr-8 md:pl-[max(1.5rem,calc((100vw-64rem)/2+1.5rem))]">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -204,12 +203,12 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Photo — right side within container */}
+          {/* Photo — fills entire right half to viewport edge */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="relative hidden md:block -mr-[calc((100vw-64rem)/2)] ml-0"
+            className="relative hidden md:block"
           >
             <Image
               src="/ritam-silhouette.jpg"
@@ -221,7 +220,6 @@ export default function HomePage() {
             {/* Gradient fade from left (text side) into photo */}
             <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#fafafa] to-transparent" />
           </motion.div>
-        </div>
 
         {/* Mobile: show photo as banner, tight crop */}
         <motion.div
