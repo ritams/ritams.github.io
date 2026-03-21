@@ -53,8 +53,9 @@ export default function HomePage() {
             style={{ objectPosition: '70% 15%' }}
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#fafafa]/95 via-[#fafafa]/60 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#fafafa]/90 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-[#fafafa]/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#fafafa]/90 via-[#fafafa]/60 to-[#fafafa]/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#fafafa]/95 via-[#fafafa]/40 to-transparent" />
         </motion.div>
 
         {/* Text content — aligned with nav (max-w-5xl mx-auto px-6) */}
