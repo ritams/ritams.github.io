@@ -30,7 +30,8 @@ export default function HomePage() {
             src="/ritam-silhouette.jpg"
             alt="Ritam Pal"
             fill
-            className="object-cover object-center"
+            className="object-cover"
+            style={{ objectPosition: 'center 15%' }}
             priority
           />
           {/* Subtle gradient on left edge for seamless blend */}
@@ -48,10 +49,12 @@ export default function HomePage() {
             src="/ritam-silhouette.jpg"
             alt="Ritam Pal"
             fill
-            className="object-cover object-top"
+            className="object-cover"
+            style={{ objectPosition: '70% 15%' }}
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#fafafa]/90 via-[#fafafa]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#fafafa]/95 via-[#fafafa]/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#fafafa]/90 via-transparent to-transparent" />
         </motion.div>
 
         {/* Text content — aligned with nav (max-w-5xl mx-auto px-6) */}
@@ -103,7 +106,7 @@ export default function HomePage() {
             transition={{ duration: 0.6, delay: 0.75 }}
             className="mt-10 flex items-center gap-3 text-xs text-[#666] tracking-wide"
           >
-            <span>Research Lead, <a href="https://consciousengines.ai" target="_blank" rel="noopener noreferrer" className="text-terracotta hover:underline">Conscious Engines</a></span>
+            <span>Research Lead, <a href="https://consciousengines.com" target="_blank" rel="noopener noreferrer" className="text-terracotta hover:underline">Conscious Engines</a></span>
             <span className="w-px h-3 bg-[#ccc]" />
             <span>building <a href="https://untitled.life" target="_blank" rel="noopener noreferrer" className="text-terracotta hover:underline">untitled.life</a></span>
           </motion.div>

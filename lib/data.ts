@@ -43,7 +43,7 @@ export const workItems: WorkItem[] = [
     description:
       "Building Felix, a proactive AI assistant. Leading model research — from architecture decisions to training pipelines. Turning research intuitions into production systems.",
     tags: ["LLMs", "Model Research", "AI Agents", "Production ML"],
-    link: "https://consciousengines.ai",
+    link: "https://consciousengines.com",
     current: true,
   },
   {
