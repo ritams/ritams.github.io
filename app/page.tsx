@@ -121,16 +121,16 @@ const exploreCards = [
 export default function HomePage() {
   return (
     <PageWrapper>
-      {/* Hero — text aligned to nav, photo fills to right edge, extends behind nav */}
-      <section className="relative min-h-screen -mt-14 pt-0 grid md:grid-cols-2">
-        {/* Text — left side, content aligned to nav width */}
-        <div className="relative flex items-center justify-end py-20 md:py-0">
+      {/* Hero — text left, photo fills right to viewport edge, extends behind nav */}
+      <section className="relative min-h-screen -mt-14 pt-0 grid md:grid-cols-[1fr_1fr]">
+        {/* Text — left side */}
+        <div className="relative flex items-center py-20 md:py-0">
           {/* Constellation background on text side */}
           <div className="absolute inset-0 overflow-hidden">
             <ConstellationCanvas />
           </div>
 
-            <div className="relative z-10 max-w-md pl-6 pr-8 md:pl-[max(1.5rem,calc((100vw-64rem)/2+1.5rem))]">
+            <div className="relative z-10 max-w-lg px-6 md:px-12 lg:pl-[max(1.5rem,calc((100vw-64rem)/2+1.5rem))] lg:pr-12">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
