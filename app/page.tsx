@@ -16,14 +16,16 @@ const exploreCards = [
 export default function HomePage() {
   return (
     <PageWrapper>
-      {/* Hero — image 3/5 width from right, text overlaid */}
-      <section className="relative min-h-screen -mt-14">
+      {/* Hero — desktop: image 3/5 width right as background; mobile: image block then text, all in 100vh */}
+
+      {/* === DESKTOP HERO === */}
+      <section className="relative min-h-screen -mt-14 hidden md:block">
         {/* Background image — 3/5 width, right-aligned */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
-          className="absolute top-0 right-0 bottom-0 hidden md:block"
+          className="absolute top-0 right-0 bottom-0"
           style={{ width: '60%' }}
         >
           <Image
@@ -34,78 +36,110 @@ export default function HomePage() {
             style={{ objectPosition: 'center 15%' }}
             priority
           />
-          {/* Subtle gradient on left edge for seamless blend */}
           <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#fafafa] to-transparent" />
         </motion.div>
 
-        {/* Mobile: full-width image */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="absolute inset-0 md:hidden"
-        >
-          <Image
-            src="/ritam-silhouette.jpg"
-            alt="Ritam Pal"
-            fill
-            className="object-cover"
-            style={{ objectPosition: '70% 15%' }}
-            priority
-          />
-          <div className="absolute inset-0 bg-[#fafafa]/40" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#fafafa]/90 via-[#fafafa]/60 to-[#fafafa]/30" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#fafafa]/95 via-[#fafafa]/40 to-transparent" />
-        </motion.div>
-
-        {/* Text content — aligned with nav (max-w-5xl mx-auto px-6) */}
-        <div className="relative z-10 max-w-5xl mx-auto px-6 min-h-screen flex flex-col justify-end pb-24 md:pb-32">
+        <div className="relative z-10 max-w-5xl mx-auto px-6 min-h-screen flex flex-col justify-end pb-32">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-6xl md:text-8xl font-bold tracking-tight text-[#1a1a1a] leading-[1.05]"
+            className="text-8xl font-bold tracking-tight text-[#1a1a1a] leading-[1.05]"
           >
             Ritam Pal
           </motion.h1>
-
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.45 }}
-            className="mt-4 text-base md:text-lg text-[#3a3a3a] max-w-md"
+            className="mt-4 text-lg text-[#3a3a3a] max-w-md"
           >
             Lost in life, asking dumb questions.
           </motion.p>
-
-          {/* Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
             className="mt-8 flex gap-4"
           >
-            <Link
-              href="/work"
-              className="inline-flex items-center gap-2 px-6 py-2.5 bg-terracotta text-white text-sm font-medium rounded-full hover:bg-[#e0626e] transition-colors"
-            >
-              See my work
-              <ArrowRight size={14} />
+            <Link href="/work" className="inline-flex items-center gap-2 px-6 py-2.5 bg-terracotta text-white text-sm font-medium rounded-full hover:bg-[#e0626e] transition-colors">
+              See my work <ArrowRight size={14} />
             </Link>
-            <Link
-              href="/about#contact"
-              className="inline-flex items-center gap-2 px-6 py-2.5 border border-terracotta text-terracotta text-sm font-medium rounded-full hover:bg-terracotta hover:text-white transition-colors"
-            >
+            <Link href="/about#contact" className="inline-flex items-center gap-2 px-6 py-2.5 border border-terracotta text-terracotta text-sm font-medium rounded-full hover:bg-terracotta hover:text-white transition-colors">
               Get in touch
             </Link>
           </motion.div>
-
-          {/* Affiliation line with divider */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.75 }}
             className="mt-10 flex items-center gap-3 text-xs text-[#666] tracking-wide"
+          >
+            <span>Research Lead, <a href="https://consciousengines.com" target="_blank" rel="noopener noreferrer" className="text-terracotta hover:underline">Conscious Engines</a></span>
+            <span className="w-px h-3 bg-[#ccc]" />
+            <span>building <a href="https://untitled.life" target="_blank" rel="noopener noreferrer" className="text-terracotta hover:underline">untitled.life</a></span>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* === MOBILE HERO === */}
+      <section className="md:hidden h-screen -mt-14 flex flex-col">
+        {/* Image block — takes up ~55% of viewport, contained not background */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="relative"
+          style={{ height: '55vh' }}
+        >
+          <Image
+            src="/ritam-silhouette.jpg"
+            alt="Ritam Pal"
+            fill
+            className="object-cover"
+            style={{ objectPosition: '60% 25%' }}
+            priority
+          />
+          {/* Bottom fade into white */}
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#fafafa] to-transparent" />
+        </motion.div>
+
+        {/* Text block — bottom portion, all visible without scrolling */}
+        <div className="relative z-10 px-6 pb-10 pt-4 flex-1 flex flex-col justify-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-5xl font-bold tracking-tight text-[#1a1a1a] leading-[1.05]"
+          >
+            Ritam Pal
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.45 }}
+            className="mt-2 text-sm text-[#3a3a3a]"
+          >
+            Lost in life, asking dumb questions.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="mt-5 flex gap-3"
+          >
+            <Link href="/work" className="inline-flex items-center gap-2 px-5 py-2 bg-terracotta text-white text-sm font-medium rounded-full hover:bg-[#e0626e] transition-colors">
+              See my work <ArrowRight size={14} />
+            </Link>
+            <Link href="/about#contact" className="inline-flex items-center gap-2 px-5 py-2 border border-terracotta text-terracotta text-sm font-medium rounded-full hover:bg-terracotta hover:text-white transition-colors">
+              Get in touch
+            </Link>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.75 }}
+            className="mt-5 flex items-center gap-2 text-[11px] text-[#666] tracking-wide"
           >
             <span>Research Lead, <a href="https://consciousengines.com" target="_blank" rel="noopener noreferrer" className="text-terracotta hover:underline">Conscious Engines</a></span>
             <span className="w-px h-3 bg-[#ccc]" />
