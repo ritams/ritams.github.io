@@ -14,7 +14,7 @@ const aspectMap: Record<string, string> = {
 export default function PhotosPage() {
   return (
     <PageWrapper>
-      <div className="max-w-5xl mx-auto px-6 pt-20 pb-12">
+      <div className="max-w-5xl mx-auto px-6 pt-28 pb-20">
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -39,7 +39,7 @@ export default function PhotosPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.15 + i * 0.06 }}
-              className={`break-inside-avoid rounded-lg bg-[#f5f5f5] ${aspectMap[photo.aspect]} flex items-center justify-center`}
+              className={`break-inside-avoid rounded-xl bg-[#f5f5f5] ${aspectMap[photo.aspect]} flex items-center justify-center`}
             >
               <Camera
                 size={24}

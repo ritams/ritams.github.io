@@ -37,7 +37,7 @@ function CopyEmail() {
 export default function AboutPage() {
   return (
     <PageWrapper>
-      <div className="max-w-5xl mx-auto px-6 pt-20 pb-12">
+      <div className="max-w-5xl mx-auto px-6 pt-28 pb-20">
         <div className="grid md:grid-cols-[280px_1fr] gap-12 md:gap-16">
           {/* Photo + contact sidebar */}
           <motion.div
@@ -46,7 +46,7 @@ export default function AboutPage() {
             transition={{ duration: 0.5 }}
             className="space-y-6"
           >
-            <div className="w-full rounded-lg overflow-hidden">
+            <div className="w-full rounded-xl overflow-hidden">
               <Image
                 src="/ritam-silhouette.jpg"
                 alt="Ritam Pal"

@@ -8,7 +8,7 @@ import { writingItems } from '@/lib/data';
 export default function WritingPage() {
   return (
     <PageWrapper>
-      <div className="max-w-5xl mx-auto px-6 pt-20 pb-12">
+      <div className="max-w-5xl mx-auto px-6 pt-28 pb-20">
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -36,7 +36,7 @@ export default function WritingPage() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.15 + i * 0.08 }}
-              className="group flex items-start justify-between gap-4 p-5 rounded-lg bg-[#f5f5f5] hover:bg-[#eeeeee] transition-colors"
+              className="group flex items-start justify-between gap-4 p-6 rounded-xl bg-[#f5f5f5] hover:bg-[#eeeeee] transition-colors"
             >
               <div className="flex-1 min-w-0">
                 <h2 className="text-sm font-medium text-[#1a1a1a] group-hover:text-terracotta transition-colors">

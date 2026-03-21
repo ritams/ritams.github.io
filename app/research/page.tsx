@@ -8,7 +8,7 @@ import { publications, researchAreas } from '@/lib/data';
 export default function ResearchPage() {
   return (
     <PageWrapper>
-      <div className="max-w-5xl mx-auto px-6 pt-20 pb-12">
+      <div className="max-w-5xl mx-auto px-6 pt-28 pb-20">
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -45,7 +45,7 @@ export default function ResearchPage() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.25 + i * 0.08 }}
-                className="p-5 rounded-lg bg-[#f5f5f5]"
+                className="p-6 rounded-xl bg-[#f5f5f5]"
               >
                 <h3 className="text-sm font-medium text-[#1a1a1a]">
                   {area.title}
@@ -78,7 +78,7 @@ export default function ResearchPage() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.4 + i * 0.06 }}
-                className="group flex items-start gap-4 p-5 rounded-lg bg-[#f5f5f5] hover:bg-[#eeeeee] transition-colors"
+                className="group flex items-start gap-4 p-6 rounded-xl bg-[#f5f5f5] hover:bg-[#eeeeee] transition-colors"
               >
                 <FileText
                   size={16}
@@ -111,7 +111,7 @@ export default function ResearchPage() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.6 }}
-          className="mt-12 p-6 rounded-lg bg-terracotta/5 border border-terracotta/20"
+          className="mt-16 p-6 rounded-xl bg-terracotta/5 border border-terracotta/20"
         >
           <p className="text-sm text-[#4a4a4a]">
             Explore the data interactively at{' '}

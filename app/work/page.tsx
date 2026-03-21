@@ -8,7 +8,7 @@ import { workItems } from '@/lib/data';
 export default function WorkPage() {
   return (
     <PageWrapper>
-      <div className="max-w-5xl mx-auto px-6 pt-20 pb-12">
+      <div className="max-w-5xl mx-auto px-6 pt-28 pb-20">
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -27,14 +27,14 @@ export default function WorkPage() {
           taking rigorous thinking and turning it into systems that work.
         </motion.p>
 
-        <div className="mt-14 space-y-8">
+        <div className="mt-16 space-y-6">
           {workItems.map((item, i) => (
             <motion.div
               key={item.title}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.15 + i * 0.08 }}
-              className="group relative p-6 md:p-8 rounded-lg bg-[#f5f5f5] hover:bg-[#eeeeee] transition-colors"
+              className="group relative p-6 md:p-8 rounded-xl bg-[#f5f5f5] hover:bg-[#eeeeee] transition-colors"
             >
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
                 <div className="flex-1">
