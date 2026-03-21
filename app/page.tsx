@@ -121,110 +121,114 @@ const exploreCards = [
 export default function HomePage() {
   return (
     <PageWrapper>
-      {/* Hero — text left, full-bleed photo right */}
-      <section className="relative min-h-[calc(100vh-3.5rem)] grid md:grid-cols-2">
-        {/* Text — left side */}
-        <div className="relative flex items-center px-8 md:px-16 py-20 md:py-0">
-          {/* Constellation background on text side */}
-          <div className="absolute inset-0 overflow-hidden">
-            <ConstellationCanvas />
+      {/* Hero — constrained to nav width */}
+      <section className="relative min-h-[calc(100vh-3.5rem)]">
+        <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-0 min-h-[calc(100vh-3.5rem)]">
+          {/* Text — left side */}
+          <div className="relative flex items-center py-20 md:py-0 pr-8">
+            {/* Constellation background on text side */}
+            <div className="absolute inset-0 overflow-hidden">
+              <ConstellationCanvas />
+            </div>
+
+            <div className="relative z-10 max-w-md">
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-5xl md:text-7xl font-bold tracking-tight text-[#1a1a1a] leading-[1.1]"
+              >
+                Ritam Pal
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="mt-4 text-sm text-[#4a4a4a] tracking-widest uppercase"
+              >
+                AI Researcher &middot; Physicist &middot; Builder
+              </motion.p>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="mt-6 text-base md:text-lg text-[#3a3a3a] leading-relaxed"
+              >
+                Asking dumb questions about statistical physics, elections,
+                AI, and everything in between. Sometimes the answers
+                turn into papers, sometimes into products, sometimes into
+                nothing at all.
+              </motion.p>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.48 }}
+                className="mt-4 text-sm text-neutral-400 italic"
+              >
+                Lost in life.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.55 }}
+                className="mt-8 flex flex-wrap gap-4"
+              >
+                <Link
+                  href="/work"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-terracotta text-white text-sm rounded-md hover:bg-terracotta-dark transition-colors"
+                >
+                  See my work <ArrowRight size={14} />
+                </Link>
+                <Link
+                  href="/about#contact"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 border border-neutral-300 text-sm rounded-md text-[#4a4a4a] hover:border-terracotta hover:text-terracotta transition-colors"
+                >
+                  Get in touch
+                </Link>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
+                className="mt-6 flex items-center gap-4 text-xs text-neutral-400"
+              >
+                <span>Research Lead at <span className="text-terracotta">Conscious Engines</span></span>
+                <span>&middot;</span>
+                <span>Founder of <span className="text-terracotta">untitled.life</span></span>
+              </motion.div>
+            </div>
           </div>
 
-          <div className="relative z-10 max-w-md">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-5xl md:text-7xl font-bold tracking-tight text-[#1a1a1a] leading-[1.1]"
-            >
-              Ritam Pal
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-4 text-sm text-[#4a4a4a] tracking-widest uppercase"
-            >
-              AI Researcher &middot; Physicist &middot; Builder
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-6 text-lg md:text-xl text-[#3a3a3a] leading-relaxed"
-            >
-              I like looking for patterns where they shouldn&apos;t exist
-              — in elections, networks, and the messy spaces between disciplines.
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.48 }}
-              className="mt-4 text-sm text-neutral-400 italic"
-            >
-              Lost in life.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.55 }}
-              className="mt-8 flex flex-wrap gap-4"
-            >
-              <Link
-                href="/work"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-terracotta text-white text-sm rounded-md hover:bg-terracotta-dark transition-colors"
-              >
-                See my work <ArrowRight size={14} />
-              </Link>
-              <a
-                href="mailto:ritam@untitled.life"
-                className="inline-flex items-center gap-2 px-5 py-2.5 border border-neutral-300 text-sm rounded-md text-[#4a4a4a] hover:border-terracotta hover:text-terracotta transition-colors"
-              >
-                Get in touch
-              </a>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              className="mt-6 flex items-center gap-4 text-xs text-neutral-400"
-            >
-              <span>Research Lead at <span className="text-terracotta">Conscious Engines</span></span>
-              <span>&middot;</span>
-              <span>Founder of <span className="text-terracotta">untitled.life</span></span>
-            </motion.div>
-          </div>
+          {/* Photo — right side within container */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            className="relative hidden md:block -mr-[calc((100vw-64rem)/2)] ml-0"
+          >
+            <Image
+              src="/ritam-silhouette.jpg"
+              alt="Ritam Pal"
+              fill
+              className="object-cover object-center"
+              priority
+            />
+            {/* Gradient fade from left (text side) into photo */}
+            <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#fafafa] to-transparent" />
+          </motion.div>
         </div>
-
-        {/* Photo — bleeds to right edge */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="relative hidden md:block"
-        >
-          <Image
-            src="/ritam-silhouette.jpg"
-            alt="Ritam Pal"
-            fill
-            className="object-cover object-center"
-            priority
-          />
-          {/* Gradient fade from left (text side) into photo */}
-          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#fafafa] to-transparent" />
-        </motion.div>
 
         {/* Mobile: show photo as banner, tight crop */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
-          className="md:hidden -order-1 relative h-44 overflow-hidden"
+          className="md:hidden -order-1 absolute top-0 left-0 right-0 h-44 overflow-hidden"
         >
           <Image
             src="/ritam-silhouette.jpg"

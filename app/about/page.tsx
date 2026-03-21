@@ -136,6 +136,27 @@ export default function AboutPage() {
 
           </motion.div>
         </div>
+
+        {/* Contact */}
+        <motion.div
+          id="contact"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-16 pt-10 border-t border-neutral-200"
+        >
+          <h2 className="text-lg font-semibold text-[#1a1a1a]">Get in touch</h2>
+          <p className="mt-3 text-sm text-[#4a4a4a]">
+            Want to collaborate, chat about research, or just say hi?
+          </p>
+          <a
+            href={`mailto:${siteConfig.email}`}
+            className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 bg-terracotta text-white text-sm rounded-md hover:bg-terracotta-dark transition-colors"
+          >
+            <Mail size={14} />
+            {siteConfig.email}
+          </a>
+        </motion.div>
       </div>
     </PageWrapper>
   );
