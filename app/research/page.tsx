@@ -78,29 +78,27 @@ export default function ResearchPage() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.4 + i * 0.06 }}
-                className="group flex items-start gap-4 p-6 rounded-xl bg-[#f5f5f5] hover:bg-[#eeeeee] transition-colors"
+                className="group block p-6 rounded-xl bg-[#f5f5f5] hover:bg-[#eeeeee] transition-colors"
               >
-                <FileText
-                  size={16}
-                  className="mt-0.5 flex-shrink-0 text-neutral-400 group-hover:text-terracotta transition-colors"
-                />
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-medium text-[#1a1a1a] group-hover:text-terracotta transition-colors leading-snug">
-                    {pub.title}
-                  </h3>
-                  <p className="mt-1 text-xs text-neutral-500">
-                    {pub.journal} ({pub.year})
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 flex-shrink-0">
+                <div className="flex items-center gap-2 mb-2">
+                  <FileText
+                    size={14}
+                    className="flex-shrink-0 text-neutral-400 group-hover:text-terracotta transition-colors"
+                  />
                   <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-terracotta/10 text-terracotta font-medium whitespace-nowrap">
                     {pub.tag}
                   </span>
                   <ExternalLink
-                    size={14}
-                    className="text-neutral-400 group-hover:text-terracotta transition-colors"
+                    size={12}
+                    className="ml-auto text-neutral-400 group-hover:text-terracotta transition-colors"
                   />
                 </div>
+                <h3 className="text-sm font-medium text-[#1a1a1a] group-hover:text-terracotta transition-colors leading-snug">
+                  {pub.title}
+                </h3>
+                <p className="mt-1 text-xs text-neutral-500">
+                  {pub.journal} ({pub.year})
+                </p>
               </motion.a>
             ))}
           </div>
