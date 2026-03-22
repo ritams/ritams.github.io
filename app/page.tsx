@@ -90,7 +90,7 @@ export default function HomePage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
           className="relative"
-          style={{ height: '55vh' }}
+          style={{ height: '50vh' }}
         >
           <Image
             src="/ritam-silhouette.jpg"
@@ -105,7 +105,7 @@ export default function HomePage() {
         </motion.div>
 
         {/* Text block — bottom portion, all visible without scrolling */}
-        <div className="relative z-10 px-6 pb-10 pt-4 flex-1 flex flex-col justify-center">
+        <div className="relative z-10 px-6 pb-6 pt-3 flex-1 flex flex-col justify-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
