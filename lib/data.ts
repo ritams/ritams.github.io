@@ -160,13 +160,14 @@ export const writingItems: WritingItem[] = [
   },
 ];
 
+export const photos = [
+  { id: 1, aspect: "portrait", alt: "Tree canopy near Indiranagar, Bangalore", src: "/photos/indiranagar-canopy.jpg", location: "Indiranagar, Bangalore", date: "March 2026" },
+];
+
 export const photoPlaceholders = [
-  { id: 1, aspect: "portrait", alt: "Placeholder" },
-  { id: 2, aspect: "landscape", alt: "Placeholder" },
-  { id: 3, aspect: "square", alt: "Placeholder" },
-  { id: 4, aspect: "landscape", alt: "Placeholder" },
-  { id: 5, aspect: "portrait", alt: "Placeholder" },
-  { id: 6, aspect: "square", alt: "Placeholder" },
-  { id: 7, aspect: "landscape", alt: "Placeholder" },
-  { id: 8, aspect: "portrait", alt: "Placeholder" },
+  { id: 101, aspect: "landscape", alt: "Placeholder" },
+  { id: 102, aspect: "square", alt: "Placeholder" },
+  { id: 103, aspect: "landscape", alt: "Placeholder" },
+  { id: 104, aspect: "portrait", alt: "Placeholder" },
+  { id: 105, aspect: "square", alt: "Placeholder" },
 ];

@@ -2,8 +2,9 @@
 
 import { motion } from 'framer-motion';
 import { Camera } from 'lucide-react';
+import Image from 'next/image';
 import PageWrapper from '@/components/PageWrapper';
-import { photoPlaceholders } from '@/lib/data';
+import { photos, photoPlaceholders } from '@/lib/data';
 
 const aspectMap: Record<string, string> = {
   portrait: 'aspect-[3/4]',
@@ -33,12 +34,32 @@ export default function PhotosPage() {
         </motion.p>
 
         <div className="mt-14 columns-2 md:columns-3 gap-4 space-y-4">
-          {photoPlaceholders.map((photo, i) => (
+          {photos.map((photo, i) => (
             <motion.div
               key={photo.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.15 + i * 0.06 }}
+              className="break-inside-avoid rounded-xl overflow-hidden group relative"
+            >
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                width={800}
+                height={1067}
+                className="w-full h-auto object-cover rounded-xl"
+              />
+              <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-b-xl">
+                <p className="text-white text-xs">{photo.location}</p>
+              </div>
+            </motion.div>
+          ))}
+          {photoPlaceholders.map((photo, i) => (
+            <motion.div
+              key={photo.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.15 + (photos.length + i) * 0.06 }}
               className={`break-inside-avoid rounded-xl bg-[#f5f5f5] ${aspectMap[photo.aspect]} flex items-center justify-center`}
             >
               <Camera
