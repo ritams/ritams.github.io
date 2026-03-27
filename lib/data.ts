@@ -162,8 +162,8 @@ export const writingItems: WritingItem[] = [
 
 export const photos = [
   { id: 1, aspect: "portrait", alt: "Tree canopy near Indiranagar, Bangalore", src: "/photos/indiranagar-canopy.jpg", location: "Indiranagar, Bangalore", date: "March 2026" },
-  { id: 2, aspect: "portrait", alt: "Reflection in glass — metallic muscles and lamplight", src: "/photos/reflection-metal.jpg", location: "Bangalore", date: "March 2026" },
-  { id: 3, aspect: "portrait", alt: "Looking up into a pendant lamp — warm glow", src: "/photos/pendant-lamp.jpg", location: "Bangalore", date: "March 2026" },
+  { id: 2, aspect: "portrait", alt: "Warm gold pendant lamp shot from below, almost abstract", src: "/photos/guerrilla-diner-pendant-lamp.jpg", location: "Guerrilla Diner, Bangalore", date: "March 2026" },
+  { id: 3, aspect: "portrait", alt: "Black and white reflection outside an analog store", src: "/photos/analog-store-reflection-bw.jpg", location: "Near Guerrilla Diner, Bangalore", date: "March 2026" },
 ];
 
 export const photoPlaceholders = [
