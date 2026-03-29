@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Mail, Github, Twitter, Instagram, Linkedin, BookOpen, Copy, Check } from 'lucide-react';
 import PageWrapper from '@/components/PageWrapper';
-import { siteConfig } from '@/lib/data';
+import { siteConfig, readingList } from '@/lib/data';
 
 const socialLinks = [
   { href: siteConfig.social.twitter, icon: Twitter, label: 'Twitter' },
@@ -156,6 +156,24 @@ export default function AboutPage() {
 
           </motion.div>
         </div>
+
+        {/* Reading */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.25 }}
+          className="mt-16 pt-10 border-t border-neutral-200"
+        >
+          <h2 className="text-lg font-semibold text-[#1a1a1a]">Reading</h2>
+          <div className="mt-4 space-y-2">
+            {readingList.map((book) => (
+              <p key={book.title} className="text-sm text-[#4a4a4a]">
+                <span className="text-[#1a1a1a] font-medium">{book.title}</span>
+                {' '}&mdash; {book.author}
+              </p>
+            ))}
+          </div>
+        </motion.div>
 
         {/* Contact */}
         <motion.div

@@ -164,6 +164,13 @@ export const photos = [
   { id: 1, aspect: "portrait", alt: "Tree canopy near Indiranagar, Bangalore", src: "/photos/indiranagar-canopy.jpg", location: "Indiranagar, Bangalore", date: "March 2026" },
   { id: 2, aspect: "portrait", alt: "Warm gold pendant lamp shot from below, almost abstract", src: "/photos/guerrilla-diner-pendant-lamp.jpg", location: "Guerrilla Diner, Bangalore", date: "March 2026" },
   { id: 3, aspect: "portrait", alt: "Black and white reflection outside an analog store", src: "/photos/analog-store-reflection-bw.jpg", location: "Near Guerrilla Diner, Bangalore", date: "March 2026" },
+  { id: 4, aspect: "square", alt: "Milky Way rising over a lone tree silhouette", src: "/photos/milky-way.jpg", location: "", date: "" },
+  { id: 5, aspect: "portrait", alt: "Forest path with dappled morning light", src: "/photos/forest-path.jpg", location: "", date: "" },
+];
+
+export const readingList = [
+  { title: "The Forty Rules of Love", author: "Elif Shafak" },
+  { title: "If Truth Be Told", author: "Om Swami" },
 ];
 
 export const photoPlaceholders = [
