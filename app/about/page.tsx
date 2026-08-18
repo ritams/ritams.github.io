@@ -107,19 +107,7 @@ export default function AboutPage() {
               </p>
 
               <p>
-                After the PhD, I moved to building things. I&apos;m currently
-                the Research Lead at{' '}
-                <span className="text-terracotta font-medium">
-                  Conscious Engines
-                </span>
-                , where we&apos;re building Felix — a proactive AI assistant.
-                My work there sits at the boundary of research and engineering:
-                architecture decisions, training pipelines, turning intuitions
-                from papers into production systems.
-              </p>
-
-              <p>
-                I&apos;m also building{' '}
+                After the PhD, I moved to building things. I&apos;m building{' '}
                 <span className="text-terracotta font-medium">
                   untitled.life
                 </span>

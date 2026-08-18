@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Ritam Pal",
   title: "Ritam Pal — Building at the intersection of physics and AI",
   description:
-    "Ritam Pal is a physicist turned AI researcher. Research Lead at Conscious Engines, founder of untitled.life, co-founder of monomials.",
+    "Ritam Pal is a physicist turned AI researcher, founder of untitled.life and co-founder of monomials.",
   url: "https://ritampal.com",
   tagline: "Building at the intersection of physics and AI.",
   email: "ritam@untitled.life",
@@ -38,15 +38,6 @@ export interface WorkItem {
 
 export const workItems: WorkItem[] = [
   {
-    title: "Conscious Engines",
-    role: "Research Lead",
-    description:
-      "Building Felix, a proactive AI assistant. Leading model research — from architecture decisions to training pipelines. Turning research intuitions into production systems.",
-    tags: ["LLMs", "Model Research", "AI Agents", "Production ML"],
-    link: "https://consciousengines.com",
-    current: true,
-  },
-  {
     title: "untitled.life",
     role: "Founder",
     description:
@@ -62,6 +53,15 @@ export const workItems: WorkItem[] = [
       "A platform to hire top PhD researchers for technical projects. Co-building with Nisarg and Vikhyat from IISER Pune. Early stage — solving the problem of connecting deep expertise with real-world needs.",
     tags: ["Platform", "PhD Talent", "Early Stage"],
     current: true,
+  },
+  {
+    title: "Conscious Engines",
+    role: "Research Lead",
+    description:
+      "Built Felix, a proactive AI assistant. Led model research — from architecture decisions to training pipelines. Turned research intuitions into production systems.",
+    tags: ["LLMs", "Model Research", "AI Agents", "Production ML"],
+    link: "https://consciousengines.com",
+    current: false,
   },
   {
     title: "Upsurge Labs / Bhindi",

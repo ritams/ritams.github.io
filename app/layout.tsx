@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     template: '%s | Ritam Pal',
   },
   description:
-    'Ritam Pal is a physicist turned AI researcher. Research Lead at Conscious Engines, building at the intersection of physics and AI.',
+    'Ritam Pal is a physicist turned AI researcher, building at the intersection of physics and AI.',
   keywords:
     'Ritam Pal, AI Research, Conscious Engines, untitled.life, monomials, Sociophysics, Statistical Physics, IISER Pune',
   authors: [{ name: 'Ritam Pal' }],
@@ -61,12 +61,12 @@ const jsonLd = {
   mainEntity: {
     '@type': 'Person',
     name: 'Ritam Pal',
-    jobTitle: 'Research Lead',
+    jobTitle: 'AI Researcher',
     url: 'https://ritampal.com',
     image: 'https://ritampal.com/ritam-twitter.jpg',
     affiliation: {
       '@type': 'Organization',
-      name: 'Conscious Engines',
+      name: 'untitled.life',
     },
     description:
       'Physicist turned AI researcher building at the intersection of deep theory and useful systems.',

@@ -75,8 +75,6 @@ export default function HomePage() {
             transition={{ duration: 0.6, delay: 0.75 }}
             className="mt-10 flex items-center gap-3 text-xs text-[#666] tracking-wide"
           >
-            <span>Research Lead, <a href="https://consciousengines.com" target="_blank" rel="noopener noreferrer" className="text-terracotta hover:underline">Conscious Engines</a></span>
-            <span className="w-px h-3 bg-[#ccc]" />
             <span>building <a href="https://untitled.life" target="_blank" rel="noopener noreferrer" className="text-terracotta hover:underline">untitled.life</a></span>
           </motion.div>
         </div>
@@ -141,8 +139,6 @@ export default function HomePage() {
             transition={{ duration: 0.6, delay: 0.75 }}
             className="mt-5 flex items-center gap-2 text-[11px] text-[#666] tracking-wide"
           >
-            <span>Research Lead, <a href="https://consciousengines.com" target="_blank" rel="noopener noreferrer" className="text-terracotta hover:underline">Conscious Engines</a></span>
-            <span className="w-px h-3 bg-[#ccc]" />
             <span>building <a href="https://untitled.life" target="_blank" rel="noopener noreferrer" className="text-terracotta hover:underline">untitled.life</a></span>
           </motion.div>
         </div>
